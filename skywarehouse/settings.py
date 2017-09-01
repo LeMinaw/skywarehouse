@@ -67,6 +67,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'warehouse.User'
+
 WSGI_APPLICATION = 'skywarehouse.wsgi.application'
 
 

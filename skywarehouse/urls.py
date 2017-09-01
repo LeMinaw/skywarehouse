@@ -7,8 +7,8 @@ from django.contrib          import admin
 # from warehouse.views      import create_error_view
 
 urlpatterns = [
-    url(r'^admin/?', admin.site.urls),
-    url(r'^',        include("warehouse.urls")),
+    url(r'^admin/', admin.site.urls),
+    url(r'^',       include("warehouse.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # handler400 = create_error_view(code=400)
