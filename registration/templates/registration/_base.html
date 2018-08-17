@@ -1,0 +1,17 @@
+{% extends "skywarehouse/base.html" %}
+
+{% block tab-user %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col s12 offset-m2 m8 offset-l3 l6">
+    <div class="card section">
+      <div class="card-content">
+        {% block form %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

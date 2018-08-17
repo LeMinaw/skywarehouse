@@ -25,6 +25,7 @@ ALLOWED_HOSTS = ["localhost", "skywarehouse.herokuapp.com", ".skyware.house", ".
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -155,6 +156,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_LOCATION = 'media'
 
 
+# Mail
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Prod settings
 
 if os.environ.get("PROD") == 'TRUE':
@@ -169,6 +175,13 @@ if os.environ.get("PROD") == 'TRUE':
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_KEY")
 
     DEBUG = False
+
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'mail.gandi.net'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'accounts@skyware.house'
+    EMAIL_HOST_PASSWORD = os.environ.get("MAIL_PWD")
+    EMAIL_USE_TLS = True
 
     STATICFILES_STORAGE = 'skywarehouse.custom_storages.StaticStorage'
 

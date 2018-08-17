@@ -96,8 +96,27 @@ class Review(models.Model):
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='avatars/', validators=[MaxFileSizeValidator()], blank=True, verbose_name="avatar")
-    bio    = models.TextField (default='', blank=True,                                             verbose_name="bio")
+    avatar = models.ImageField     (upload_to='avatars/', validators=[MaxFileSizeValidator()], blank=True, verbose_name="avatar" )
+    bio    = models.TextField      (default='',                                                blank=True, verbose_name="bio"    )
+    favs   = models.ManyToManyField('Blueprint', related_name='fans',                                      verbose_name="favoris")
 
     first_name = None
-    last_name = None
+    last_name  = None
+
+    def get_absolute_url(self):
+        return reverse('warehouse:user', kwargs={'username':self.username})
+
+    @property
+    def dwnlds(self):
+        return sum([bp.dwnlds or 0 for bp in self.blueprints.all()])
+
+    @property
+    def fans_nb(self):
+        return sum([bp.fans.count() or 0 for bp in self.blueprints.all()])
+
+    @property
+    def blocks(self):
+        return sum([bp.blocks or 0 for bp in self.blueprints.all()])
+
+    class Meta:
+        verbose_name = "utilisateur"

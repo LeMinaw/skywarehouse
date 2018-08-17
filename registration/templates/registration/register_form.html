@@ -1,0 +1,16 @@
+{% extends "registration/_base.html" %}
+
+{% block title %}
+  Registration
+{% endblock %}
+
+{% block form %}
+  <h4 class="center-align">Registration</h4>
+  <form class="section" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button class="btn waves-effect waves-light" type="submit" name="action">Register
+      <i class="material-icons right">send</i>
+    </button>
+  </form>
+{% endblock %}

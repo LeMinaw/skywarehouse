@@ -1,0 +1,7 @@
+Hi {{ user.username }}, welcome on skyware.house.
+
+Please follow the link below to activate your account:
+
+{{ domain }}{% url 'registration:activate' uidb64=uid token=token %}
+
+It should send you to our main page, right logged in into your new account. :-)

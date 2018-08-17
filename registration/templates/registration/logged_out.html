@@ -1,0 +1,11 @@
+{% extends "registration/_base.html" %}
+
+{% block title %}
+  Log out
+{% endblock %}
+
+{% block form %}
+  <h4 class="center-align">Log out</h4>
+  <p>You logged out sucessfully.</p>
+  <p>You can <a href="{% url 'warehouse:home' %}">go back to our main page</a>.</p>
+{% endblock %}

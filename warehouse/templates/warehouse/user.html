@@ -1,0 +1,78 @@
+{% extends "skywarehouse/base.html" %}
+
+{% load staticfiles %}
+{% load humanize %}
+
+{% block title %}
+  {{ user }}
+{% endblock %}
+
+{% block tab-user %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-content">
+      <div class="row">
+        <div class="col s12 m9">
+          <h1 class="left">{{ user }}</h1>
+        </div>
+        <div class="col s12 m3">
+          <span class="right">
+            <img class="responsive-img" src="
+              {% if user.avatar %}
+                {{ user.avatar.url }}
+              {% else %}
+                {% static 'warehouse/img/nouser.png' %}
+              {% endif %}
+            "></img>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m9">
+          <p class="flow-text">{{ user.bio|default:"This user have not added his bio yet." }}</p>
+        </div>
+        <div class="col s12 m3">
+          <table class="bordered">
+            <tbody>
+              <tr><td>
+                <h6>Liked</h6>
+                <b>{{ user.fans_nb }} times</b>
+              </td></tr>
+              <tr><td>
+                <h6>Downloaded</h6>
+                <b>{{ user.dwnlds }} times</b>
+              </td></tr>
+              <tr><td>
+                <h6>Registered</h6>
+                <b>{{ user.date_joined|naturaltime }}</b>
+              </td></tr>
+              <tr><td>
+                <h6>Blocks uploaded</h6>
+                <b>{{ user.blocks }} parts</b>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% if user.blueprints.all.count %}
+        <div class="row">
+          <div class="col s12">
+            <h2>{{ user }}'s publications ({{ user.blueprints.all.count }})</h2>
+            {% include "warehouse/blueprintcards.html" with blueprints=user.blueprints.all %}
+          </div>
+        </div>
+      {% endif %}
+      {% if user.favs.all.count %}
+        <div class="row">
+          <div class="col s12">
+            <h2>{{ user }}'s favorites ({{ user.favs.all.count }})</h2>
+            {% include "warehouse/blueprintcards.html" with blueprints=user.favs.all %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
