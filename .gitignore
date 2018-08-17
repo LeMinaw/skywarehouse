@@ -17,9 +17,6 @@ media/
 *.sqlite3
 *.old
 
-# Security secrets
-settingsprod.py
-
 # PyInstaller
 *.manifest
 
@@ -33,7 +30,6 @@ pip-delete-this-directory.txt
 
 # Django stuff:
 *.log
-local-settings.py
 
 # pyenv
 .python-version
