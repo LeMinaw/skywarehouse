@@ -37,15 +37,12 @@
           <div class="row">
             <div class="col s12 m6">
               {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
-              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
-              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
-              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
             </div>
             <div class="col s12 m6">
               {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
-              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
-              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
-              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
+            </div>
+            <div class="col s12">
+              {% include "warehouse/meter.html" with tooltip="Overall grade" icon="star" value=blueprint.total_grade %}
             </div>
           </div>
           <h2>Comments</h2>
@@ -78,14 +75,6 @@
               <tr><td>
                 <h6>Last modified</h6>
                 <b>{{ blueprint.modif }}</b>
-              </td></tr>
-              <tr><td>
-                <h6>Blocks count</h6>
-                <b>{{ blueprint.blocks }} parts</b>
-              </td></tr>
-              <tr><td>
-                <h6>Mass</h6>
-                <b>{{ blueprint.mass }}kg</b>
               </td></tr>
               <tr><td>
                 <h6>Downloads</h6>

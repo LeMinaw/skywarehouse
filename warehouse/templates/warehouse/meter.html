@@ -1,6 +1,6 @@
 {# Needs population from tooltip, icon, and value. #}
 
-<div class="valign-wrapper p-top tooltipped" data-position="left" data-delay="50" data-tooltip="{{ tooltip }}">
+<div class="valign-wrapper p-top tooltipped" data-position="left" data-delay="50" data-tooltip="{{ tooltip }}: {{ value }}">
   <i class="material-icons align-right">{{ icon }}</i>
   <meter value="{{ value }}" min="0" max="5">{{ value }}/5</meter>
 </div>
