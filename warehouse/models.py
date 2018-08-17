@@ -31,7 +31,7 @@ class Blueprint(models.Model):
         unique_slug = slug
         i = 1
         while Blueprint.objects.filter(slug=unique_slug).exists():
-            unique_slug = '%s-%s' % (slug, i)
+            unique_slug = f"{slug}-{i}"
             i += 1
         return unique_slug
 
@@ -86,7 +86,7 @@ class FileVersion(models.Model):
     dwnlds    = models.PositiveIntegerField     (default=0,                                                           verbose_name="nombre de téléchargements")
 
     def __str__(self):
-        return "%s - version %s" % (self.blueprint, self.number)
+        return f"{self.blueprint} - version {self.number}"
 
     def get_absolute_url(self):
         return reverse('warehouse:blueprint', kwargs={'id': self.id})
@@ -104,7 +104,7 @@ class Comment(models.Model):
     content   = models.TextField    (                                                                verbose_name="contenu")
 
     def __str__(self):
-        return "%s - %s" % (self.blueprint, self.id)
+        return f"{self.blueprint} - {self.id}"
 
     def get_absolute_url(self):
         return self.blueprint.get_absolute_url()
@@ -124,7 +124,7 @@ class Review(models.Model):
     technic_grade   = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design extérieur")
 
     def __str__(self):
-        return "%s - %s" % (self.blueprint, self.id)
+        return f"{self.blueprint} - {self.id}"
 
     def get_absolute_url(self):
         return self.blueprint.get_absolute_url()
