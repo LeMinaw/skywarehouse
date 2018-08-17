@@ -10,17 +10,15 @@ from warehouse.fields           import *
 
 
 class Blueprint(models.Model):
-    added  = models.DateTimeField       (auto_now_add=True,                                                    verbose_name="date d'ajout")
-    modif  = models.DateTimeField       (auto_now=True,                                                        verbose_name="date d'édition")
-    categ  = models.ForeignKey          ('Category', on_delete=models.CASCADE, related_name='blueprints',      verbose_name="catégorie")
-    author = models.ForeignKey          ('User',     on_delete=models.CASCADE, related_name="blueprints",      verbose_name="auteur")
-    name   = models.CharField           (max_length=64,                                                        verbose_name="nom")
-    mass   = models.PositiveIntegerField(default=0,                                                            verbose_name="masse")
-    blocks = models.PositiveIntegerField(default=0,                                                            verbose_name="nombre de blocs")
-    slug   = models.SlugField           (                                                                      verbose_name="identifiant")
-    image  = models.ImageField          (upload_to='covers/', validators=[MaxFileSizeValidator()], blank=True, verbose_name="vignette")
-    desc   = models.TextField           (blank=True, default='',                                               verbose_name="description")
-    pin    = models.BooleanField        (default=False,                                                        verbose_name="épinglé")
+    added  = models.DateTimeField(auto_now_add=True,                                                    verbose_name="date d'ajout")
+    modif  = models.DateTimeField(auto_now=True,                                                        verbose_name="date d'édition")
+    categ  = models.ForeignKey   ('Category', on_delete=models.CASCADE, related_name='blueprints',      verbose_name="catégorie")
+    author = models.ForeignKey   ('User',     on_delete=models.CASCADE, related_name="blueprints",      verbose_name="auteur")
+    name   = models.CharField    (max_length=64,                                                        verbose_name="nom")
+    slug   = models.SlugField    (                                                                      verbose_name="identifiant")
+    image  = models.ImageField   (upload_to='covers/', validators=[MaxFileSizeValidator()], blank=True, verbose_name="vignette")
+    desc   = models.TextField    (blank=True, default='',                                               verbose_name="description")
+    pin    = models.BooleanField (default=False,                                                        verbose_name="épinglé")
 
     def __str__(self):
         return self.name
@@ -44,15 +42,15 @@ class Blueprint(models.Model):
 
     @property
     def aesthetic_grade(self):
-        return mean([review.get_aesthetic_grade() for review in self.reviews.all()] or [0])
+        return mean([review.aesthetic_grade for review in self.reviews.all()] or [0])
 
     @property
     def technic_grade(self):
-        return mean([review.get_technic_grade() for review in self.reviews.all()] or [0])
+        return mean([review.technic_grade for review in self.reviews.all()] or [0])
 
     @property
     def total_grade(self):
-        return mean([review.get_total_grade() for review in self.reviews.all()] or [0])
+        return mean([review.total_grade for review in self.reviews.all()] or [0])
 
     @property
     def dwnlds(self):
@@ -122,12 +120,8 @@ class Review(models.Model):
     author    = models.ForeignKey   ('User',      on_delete=models.CASCADE, related_name='reviews', verbose_name="auteur")
 
     # TODO: Custom field type implementing this custom validator
-    grade_interior  = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design intérieur")
-    grade_exterior  = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design extérieur")
-    grade_space     = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note espace")
-    grade_mechanics = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note mécanismes")
-    grade_weapons   = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note armes")
-    grade_maneuv    = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note manoeuvrabilité")
+    aesthetic_grade = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design intérieur")
+    technic_grade   = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design extérieur")
 
     def __str__(self):
         return "%s - %s" % (self.blueprint, self.id)
@@ -135,14 +129,9 @@ class Review(models.Model):
     def get_absolute_url(self):
         return self.blueprint.get_absolute_url()
 
-    def get_aesthetic_grade(self):
-        return (self.grade_interior + self.grade_exterior + self.grade_space) / 3.0
-
-    def get_technic_grade(self):
-        return (self.grade_mechanics + self.grade_weapons + self.grade_maneuv) / 3.0
-
-    def get_total_grade(self):
-        return (self.get_aesthetic_grade() + self.get_technic_grade()) / 2.0
+    @property
+    def total_grade(self):
+        return (self.aesthetic_grade + self.technic_grade) / 2
 
     class Meta:
         verbose_name = "appréciation"
@@ -154,6 +143,7 @@ class User(AbstractUser):
     bio    = models.TextField      (default='',                                                blank=True, verbose_name="bio"    )
     favs   = models.ManyToManyField('Blueprint', related_name='fans',                                      verbose_name="favoris")
 
+    # Disable default AbstractUser fields
     first_name = None
     last_name  = None
 
@@ -167,10 +157,6 @@ class User(AbstractUser):
     @property
     def fans_nb(self):
         return sum([bp.fans.count() or 0 for bp in self.blueprints.all()])
-
-    @property
-    def blocks(self):
-        return sum([bp.blocks or 0 for bp in self.blueprints.all()])
 
     class Meta:
         verbose_name = "utilisateur"

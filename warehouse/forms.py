@@ -34,12 +34,10 @@ class BlueprintForm(forms.ModelForm):
 
     class Meta:
         model = Blueprint
-        fields = ['categ', 'name', 'image', 'desc', 'mass', 'blocks']
+        fields = ['categ', 'name', 'image', 'desc']
         labels = {
             'categ':  "Category",
             'name':   "Name",
             'image':  "Cover picture",
-            'desc':   "Description",
-            'mass':   "Mass",
-            'blocks': "Blocks count"
+            'desc':   "Description"
         }
