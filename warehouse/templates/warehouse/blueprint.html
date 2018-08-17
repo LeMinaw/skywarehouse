@@ -1,0 +1,104 @@
+{% extends "skywarehouse/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}
+  {{ blueprint.name }}
+{% endblock %}
+
+{% block tab-blueprints %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-content">
+      <div class="row">
+        <div class="col s12 m9">
+          <h1 class="left">{{ blueprint.name }}</h1>
+        </div>
+        <div class="col s12 m3">
+          <h1 class="right">
+            <a href="javascript:;" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3"><i class="material-icons">favorite_border</i></a>
+            <a href="{{ blueprint.last_file_version.file.url }}" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3"><i class="material-icons">file_download</i></a>
+            <a href="{% url 'warehouse:files' slug %}" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3"><i class="material-icons">folder_open</i></a>
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m9">
+          {% if blueprint.image %}
+            <img class="responsive-img" src="{{ blueprint.image.url }}">
+          {% else %}
+            <img class="responsive-img" src="{% static 'warehouse/img/nopic.png' %}">
+          {% endif %}
+          <p class="flow-text">{{ blueprint.desc }}</p>
+          <h2>Grades</h2>
+          <div class="row">
+            <div class="col s12 m6">
+              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
+              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
+              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
+              {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
+            </div>
+            <div class="col s12 m6">
+              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
+              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
+              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
+              {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
+            </div>
+          </div>
+          <h2>Comments</h2>
+          {% for comment in blueprint.comments.all %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">
+                  <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>, the {{ comment.added }}
+                </span>
+                <p>{{ comment.content }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="col s12 m3">
+          <table class="bordered">
+            <tbody>
+              <tr><td>
+                <h6>Category</h6>
+                <b><a href="{{ blueprint.categ.get_absolute_url }}">{{ blueprint.categ }}</a></b>
+              </td></tr>
+              <tr><td>
+                <h6>Author</h6>
+                <b><a href="{{ blueprint.author.get_absolute_url }}">{{ blueprint.author }}</a></b>
+              </td></tr>
+              <tr><td>
+                <h6>Publication date</h6>
+                <b>{{ blueprint.added }}</b>
+              </td></tr>
+              <tr><td>
+                <h6>Last modified</h6>
+                <b>{{ blueprint.modif }}</b>
+              </td></tr>
+              <tr><td>
+                <h6>Blocks count</h6>
+                <b>{{ blueprint.blocks }} parts</b>
+              </td></tr>
+              <tr><td>
+                <h6>Mass</h6>
+                <b>{{ blueprint.mass }}kg</b>
+              </td></tr>
+              <tr><td>
+                <h6>Downloads</h6>
+                <b>{{ blueprint.dwnlds }}</b>
+              </td></tr>
+              <tr><td>
+                <h6>Fans</h6>
+                <b>{{ blueprint.fans.count }}</b>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

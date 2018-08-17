@@ -1,0 +1,63 @@
+// out: style.css, sourcemap: false, compress: true
+
+.ontop {
+    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 100;
+    .row.container { margin-bottom: 0 }
+}
+
+.carousel .carousel-item {
+  width: 100%;
+  padding-left: 25px;
+  height: auto;
+}
+
+// Header
+
+.banner { height: auto }
+#banner-logo {
+    image-rendering: crisp-edges;
+    padding-top: 70px;
+    padding-bottom: 40px;
+}
+
+// Footer
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main { flex: 1 0 auto }
+footer {
+    padding: 30px;
+}
+
+// Global
+
+.p-top { padding-top: 12px }
+
+// Cards
+
+.card {
+    meter {
+        width: 100%;
+        background: #CCC;
+        -moz-appearance: none;
+        border-radius: 3px;
+        float: right;
+        top: 10px;
+    }
+    *::-moz-meter-bar {
+        background: #212121;
+        border-radius: 3px;
+    }
+    .card-content i { width: 45px }
+    .card-action a { color: #000 }
+}
+.card > a { color: #212121 }

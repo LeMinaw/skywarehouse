@@ -39,13 +39,13 @@ class UserAdmin(AbstractUserAdmin):
     )
 
 
-class ShipAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug', 'author', 'pin')
-    list_filter = ('slug', 'author', 'pin')
+class BlueprintAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'slug', 'categ', 'author', 'pin')
+    list_filter = ('slug', 'categ', 'author', 'pin')
     date_hierarchy = 'added'
     fieldsets = (
         (None, {
-            'fields': ('name', 'slug', 'author')
+            'fields': ('name', 'slug', 'categ', 'author')
         }),
         ('Meta', {
             'fields': ('desc', 'image', 'pin')
@@ -59,7 +59,7 @@ class ReviewAdmin(admin.ModelAdmin):
     date_hierarchy = 'added'
     fieldsets = (
         (None, {
-            'fields': ('author', 'ship')
+            'fields': ('author', 'blueprint')
         }),
         ('Notes', {
             'fields': (('grade_interior', 'grade_exterior', 'grade_space'), ('grade_mechanics', 'grade_weapons', 'grade_maneuv')),
@@ -72,7 +72,16 @@ class FileVersionAdmin(admin.ModelAdmin):
     date_hierarchy = 'added'
     fieldsets = (
         (None, {
-            'fields': ('file', 'ship', 'number', 'dwnlds')
+            'fields': ('file', 'blueprint', 'number', 'dwnlds')
+        }),
+    )
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'slug')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug')
         }),
     )
 
@@ -82,13 +91,14 @@ class CommentAdmin(admin.ModelAdmin):
     date_hierarchy = 'added'
     fieldsets = (
         (None, {
-            'fields': ('ship', 'author', 'content')
+            'fields': ('blueprint', 'author', 'content')
         }),
     )
 
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Ship, ShipAdmin)
+admin.site.register(Blueprint, BlueprintAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(FileVersion, FileVersionAdmin)
+admin.site.register(Category, CategoryAdmin)

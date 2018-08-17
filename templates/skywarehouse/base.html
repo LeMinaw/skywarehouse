@@ -1,0 +1,68 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport"    content="width=device-width, initial-scale=1">
+    <meta name="Author"      content="LeMinaw">
+    <meta name="Keywords"    content="skywanderers,warehouse,blueprint,archive,game,plan,exchange,community,file,ship,spaceship,mech,mecha,hovercraft,sky,wanderers">
+    <meta name="Description" content="Welcome to the Skywanderers blueprint archive. This is an exchange warehouse for Skywanderers blueprint files.">
+
+    <link rel="icon"       type="image/png" href="{% static 'img/favicon.png' %}"/>
+    <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css"  href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css"  href="{% static 'skywarehouse/css/style.css' %}">
+
+    <title>SkyWarehouse, the Skywanderers blueprints archive | {% block title %}Home{% endblock %}</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="banner parallax-container">
+        <div class="parallax">
+          <img src="{% static '/skywarehouse/img/bck.jpg' %}">
+        </div>
+        <div class="row container">
+          <img class="col s12" id="banner-logo" src="{% static 'skywarehouse/img/banner.png' %}"></img>
+        </div>
+      </div>
+      <div class="black z-depth-3" id="navbar">
+        <div class="row container">
+          <ul class="tabs tabs-fixed-width tabs-transparent">
+            <li class="tab"><a target="_self" {% block tab-home %}{% endblock %} href="{% url 'warehouse:home' %}">Home</a></li>
+            <li class="tab"><a target="_self" {% block tab-blueprints %}{% endblock %} href="{% url 'warehouse:main' %}">Blueprints</a></li>
+            <li class="tab"><a target="_self" {% block tab-user %}{% endblock %}
+              {% if request.user.is_authenticated %}
+                href="{{ request.user.get_absolute_url }}">{{ request.user }}
+              {% else %}
+                href="{% url 'login' %}">Log in
+              {% endif %}
+            </a></li>
+            <li class="tab"><a target="_self" {% block tab-about %}{% endblock %} href="{% url 'warehouse:about' %}">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="placeholder"></div>
+    </header>
+    <main>
+      <div class="container">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+    <footer class="black z-depth-3 white-text">
+      <div class="container">
+        Carefully programmed and designed by <a href="www.minaw.net">LeMinaw</a>.
+        <span class="right">See also <a href="www.skywanderersgame.com">the official website</a>.</span>
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://use.fontawesome.com/329a4b4215.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="{% static 'skywarehouse/js/script.js' %}"></script>
+  </body>
+
+</html>

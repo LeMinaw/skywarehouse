@@ -1,0 +1,42 @@
+{# Needs population from a nested <blueprints> list. #}
+
+{% load staticfiles %}
+
+<div class="row">
+  {% for blueprint in blueprints %}
+    <div class="col s12 m6 l4">
+      <div class="card hoverable sticky-action">
+        <a href="{{ blueprint.get_absolute_url }}">
+          <div class="card-image">
+            {% if blueprint.image %}
+              <img src="{{ blueprint.image.url }}">
+            {% else %}
+              <img src="{% static 'warehouse/img/nopic.png' %}">
+            {% endif %}
+          </div>
+          <div class="card-content">
+            <span class="card-title">{{ blueprint.name }}</span>
+            {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
+            {% include "warehouse/meter.html" with tooltip="Technical grade"  icon="build" value=blueprint.technic_grade %}
+            {% include "warehouse/meter.html" with tooltip="Overall grade"    icon="star"  value=blueprint.total_grade %}
+          </div>
+        </a>
+        <div class="card-action">
+          <a href="javascript:;"                               class="black-text hover"><i class="material-icons">favorite_border</i></a>
+          <a href="{{ blueprint.last_file_version.file.url }}" class="black-text hover"><i class="material-icons">file_download</i></a>
+          <a href="javascript:;"                               class="black-text hover"><i class="material-icons activator right">more_vert</i></a>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">{{ blueprint.name }}<i class="material-icons right">close</i></span>
+          <p>First released the {{ blueprint.added|date:"DATE_FORMAT" }}.</p>
+          <p>Published in <a href="{{ blueprint.categ.get_absolute_url }}">{{ blueprint.categ }}</a> by <a href="{{ blueprint.author.get_absolute_url }}">{{ blueprint.author }}</a>.</p>
+          <br/>
+          <p>
+            {{ blueprint.desc }}
+            <a href="{{ blueprint.get_absolute_url }}">See more...</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
