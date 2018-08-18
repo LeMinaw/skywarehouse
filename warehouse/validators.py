@@ -6,7 +6,7 @@ class MaxFileSizeValidator(object):
     message = 'Max allowed file size is %(max_size)s.'
     code = 'file_too_big'
 
-    def __init__(self, max_size=10*1024*1024, message=None, code=None):
+    def __init__(self, max_size=10*1024**2, message=None, code=None):
             self.max_size = max_size
             if message is not None:
                 self.message = message
