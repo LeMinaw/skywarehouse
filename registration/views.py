@@ -34,13 +34,9 @@ def register(request):
         user.email_user(subject, message)
 
         user.save()
-        return register_done(request)
+        return render(request, "registration/register_done.html", locals())
 
     return render(request, "registration/register_form.html", {'form':registration_form})
-
-
-def register_done(request):
-    return render(request, "registration/register_done.html", locals())
 
 
 def activate(request, uidb64, token):
