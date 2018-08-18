@@ -36,7 +36,7 @@ class Blueprint(models.Model):
         return unique_slug
 
     def save(self, *args, **kwargs):
-        if self.slug is None:
+        if self.slug is None or self.slug == '':
             self.slug = self.make_unique_slug()
         super().save()
 
