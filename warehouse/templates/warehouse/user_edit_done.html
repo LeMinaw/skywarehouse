@@ -1,0 +1,14 @@
+{% extends "skywarehouse/base.html" %}
+
+{% block title %}
+  Profile modified sucessfully!
+{% endblock %}
+
+{% block tab-user %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+  <h4 class="center-align">Your profile was edited sucessfully!</h4>
+  <p>You can now <a href="{{ user.get_absolute_url }}">view it</a> if you want to.</p>
+{% endblock %}

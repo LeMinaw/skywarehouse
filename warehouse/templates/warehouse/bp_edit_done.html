@@ -1,0 +1,15 @@
+{% extends "skywarehouse/base.html" %}
+
+{% block title %}
+  {{ blueprint.name }} {{ action }} sucessfully!
+{% endblock %}
+
+{% block tab-blueprints %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+  <h4 class="center-align">Your blueprint {{ blueprint.name }} was {{ action }} sucessfully!</h4>
+  <p>Thanks for your contribution. :-)</p>
+  <p>You can now <a href="{{ blueprint.get_absolute_url }}">view it</a> or <a href="{% url 'warehouse:main' %}">go back to the warehouse</a>.</p>
+{% endblock %}

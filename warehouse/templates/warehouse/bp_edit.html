@@ -1,0 +1,29 @@
+{% extends "skywarehouse/base.html" %}
+
+{% load materialize %}
+
+{% block title %}
+{% endblock %}
+
+{% block tab-blueprints %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <form enctype="multipart/form-data" name="blueprint_form" action="" method="post">
+        {% csrf_token %}
+        {{ blueprint_form.name |as_material:"s12 m6" }}
+        {{ blueprint_form.categ|as_material:"s12 m6" }}
+        {{ blueprint_form.file |as_material:"s12 m6" }}
+        {{ blueprint_form.image|as_material:"s12 m6" }}
+        {{ blueprint_form.desc |as_material:"s12"    }}
+        <div class="form-actions center-align">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+{% endblock %}

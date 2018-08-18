@@ -24,13 +24,9 @@ class CommentForm(forms.ModelForm):
         fields = ['content']
         labels = {'content': "Your comment"}
 
-#     def __init__(self, *args, **kwargs):
-#         kwargs.setdefault("label_suffix", "") # Removes label suffixes for all fields
-#         super(AddCommentForm, self).__init__(*args, **kwargs)
-
 
 class BlueprintForm(forms.ModelForm):
-    file = forms.FileField(required=True, label="File")
+    file = forms.FileField(required=True, label="File (SWBP)")
 
     class Meta:
         model = Blueprint

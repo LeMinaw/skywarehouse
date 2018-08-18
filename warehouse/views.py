@@ -77,37 +77,48 @@ def files(request, slug):
     return render(request, "warehouse/files.html", locals())
 
 
-def edit(request, slug=None):
+def bp_edit(request, slug=None):
     if slug is not None:
         try:
             blueprint = Blueprint.objects.get(slug=slug)
         except Blueprint.DoesNotExist:
             raise Http404("This blueprint does not exists. :(")
-        blueprint_form = BlueprintForm(request.POST or None, request.FILES or None, instance=blueprint)
-        if request.user is not blueprint.author:
-            raise PermissionDenied("You are not allowed to edit this blueprint.")
+
+        blueprint_form = BlueprintForm(
+                request.POST or None,
+                request.FILES or None,
+                initial={'file': blueprint.last_file_version.file},
+                instance=blueprint
+        )
+        
+        if request.user != blueprint.author:
+            raise PermissionDenied("You are not allowed to edit this blueprint. Try to log in.")
 
         if request.method == "POST" and blueprint_form.is_valid():
                 blueprint_form.save()
-                if blueprint_form.file.has_changed():
-                    file_version = FileVersion(file=request.FILES['file'], blueprint=blueprint)
+            if 'file' in blueprint_form.changed_data:
+                new_version_number = blueprint.last_file_version.number + 1
+                file_version = FileVersion(file=request.FILES['file'], blueprint=blueprint, number=new_version_number)
                     file_version.save()
+            action = "modified"
+            return render(request, "warehouse/bp_edit_done.html", locals())
 
         else:
-            blueprint_form = BlueprintForm(initial={'file': blueprint.last_file_version}, instance=blueprint)
-
-    else:
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             raise PermissionDenied("Please log in before adding a blueprint.") # TODO: Use login decorator
+
         blueprint_form = BlueprintForm(request.POST or None, request.FILES or None)
+        
         if request.method == "POST" and blueprint_form.is_valid():
             blueprint = blueprint_form.save(commit=False)
             blueprint.author = request.user
             blueprint.save()
             file_version = FileVersion(file=request.FILES['file'], blueprint=blueprint)
             file_version.save()
+            action = "added"
+            return render(request, "warehouse/bp_edit_done.html", locals())
 
-    return render(request, "warehouse/edit.html", locals())
+    return render(request, "warehouse/bp_edit.html", locals())
 
 
 def user(request, username):
