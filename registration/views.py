@@ -50,6 +50,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return redirect('warehouse:home')
+        return redirect('warehouse:home', permanent=True)
     else:
         return render(request, "registration/register_error.html")

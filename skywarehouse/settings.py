@@ -69,6 +69,10 @@ TEMPLATES = [
 
 AUTH_USER_MODEL = 'warehouse.User'
 
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'warehouse:home'
+
 WSGI_APPLICATION = 'skywarehouse.wsgi.application'
 
 

@@ -1,16 +1,22 @@
 {% extends "registration/_base.html" %}
 
+{% load materialize %}
+
 {% block title %}
   Registration
 {% endblock %}
 
 {% block form %}
   <h4 class="center-align">Registration</h4>
-  <form class="section" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <button class="btn waves-effect waves-light" type="submit" name="action">Register
-      <i class="material-icons right">send</i>
-    </button>
-  </form>
+  <div class="row">
+    <form class="section" method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+        {{ field|as_material:'s12' }}
+      {% endfor %}
+      <button class="btn waves-effect waves-light" type="submit" name="action">Register
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
+  </div>
 {% endblock %}

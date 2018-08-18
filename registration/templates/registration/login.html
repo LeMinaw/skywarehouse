@@ -1,18 +1,24 @@
 {% extends "registration/_base.html" %}
 
+{% load materialize %}
+
 {% block title %}
   Log in
 {% endblock %}
 
 {% block form %}
   <h4 class="center-align">Log in</h4>
-  <form class="section" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <button class="btn waves-effect waves-light" type="submit" name="action">Log in
-      <i class="material-icons right">send</i>
-    </button>
-  </form>
+  <div class="row">
+    <form class="section" method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+        {{ field|as_material:'s12' }}
+      {% endfor %}
+      <button class="btn waves-effect waves-light" type="submit" name="action">Log in
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
+  </div>
   <div class="section">
     <p>Don't have an account yet? <a href="{% url 'registration:register' %}">Create one</a>!</p>
     <p>Lost password? <a href="{% url 'password_reset' %}">We can help</a>.</p>
