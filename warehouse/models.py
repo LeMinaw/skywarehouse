@@ -27,10 +27,10 @@ class Blueprint(models.Model):
         return reverse('warehouse:blueprint', kwargs={'slug': self.slug})
 
     def make_unique_slug(self):
-        slug = slugify(self.title)
+        slug = slugify(self.name)
         unique_slug = slug
         i = 1
-        while Blueprint.objects.filter(slug=unique_slug).exists():
+        while Blueprint.objects.filter(slug=unique_slug).exists() or unique_slug == "new":
             unique_slug = f"{slug}-{i}"
             i += 1
         return unique_slug
