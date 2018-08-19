@@ -1,0 +1,13 @@
+{# Needs population from <link>, <action> and <icon>, optionally from <params>. #}
+
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large red tooltipped" data-position="left" data-delay="50" data-tooltip="{{ action }}" href=
+    {% if param %}
+      "{% url link param %}"
+    {% else %}
+      "{% url link %}"
+    {% endif %}
+  >
+    <i class="large material-icons">{{ icon }}</i>
+  </a>
+</div>

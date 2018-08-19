@@ -28,9 +28,5 @@
     </div>
   </div>
 
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red" href="{% url 'warehouse:blueprint_add' %}">
-      <i class="large material-icons">file_upload</i>
-    </a>
-  </div>
+  {% include "warehouse/action_button.html" with link='warehouse:blueprint_add' icon="file_upload" action="Upload blueprint" %}
 {% endblock %}

@@ -92,10 +92,6 @@
   </div>
 
   {% if request.user == blueprint.author %}
-    <div class="fixed-action-btn">
-      <a class="btn-floating btn-large red" href="{% url 'warehouse:blueprint_edit' slug=blueprint.slug %}">
-        <i class="large material-icons">edit</i>
-      </a>
-    </div>
+    {% include "warehouse/action_button.html" with link='warehouse:blueprint_edit' param=blueprint.slug icon='edit' action="Edit blueprint" %}
   {% endif %}
 {% endblock %}
