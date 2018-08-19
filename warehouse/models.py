@@ -26,6 +26,9 @@ class Blueprint(models.Model):
     def get_absolute_url(self):
         return reverse('warehouse:blueprint', kwargs={'slug': self.slug})
 
+    def get_edit_url(self):
+        return reverse('warehouse:blueprint_edit', kwargs={'slug': self.slug})
+
     def make_unique_slug(self):
         slug = slugify(self.name)
         unique_slug = slug
