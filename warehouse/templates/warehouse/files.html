@@ -19,7 +19,7 @@
           <h5>{{ blueprint.name }} [<a href="{{ blueprint.get_absolute_url }}">Go back</a>]</h5>
           <div class="collection">
             {% for file_version in blueprint.file_versions.all %}
-              <a href="{{ file_version.file.url }}" class="collection-item {% if file_version == blueprint.last_file_version %}active{% endif %}">
+              <a href="{{ file_version.download_url }}" class="collection-item {% if file_version == blueprint.last_file_version %}active{% endif %}">
                 <i class="material-icons secondary-content">file_download</i>
                 Version {{ file_version.number }}, as of {{ file_version.added }}
               </a>

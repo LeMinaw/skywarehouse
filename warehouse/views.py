@@ -1,4 +1,4 @@
-from django.shortcuts       import render
+from django.shortcuts       import render, redirect
 from django.core.paginator  import Paginator
 from django.http            import Http404, JsonResponse
 from django.core.exceptions import PermissionDenied
@@ -166,6 +166,18 @@ def fav_edit(request, slug):
         now_fav = True
     
     return JsonResponse({'now_fav': now_fav})
+
+
+def download(request, slug, ver):
+    try:
+        blueprint = Blueprint.objects.get(slug=slug)
+        version = blueprint.file_versions.get(number=ver)
+    except (Blueprint.DoesNotExist, FileVersion.DoesNotExist):
+        raise Http404("This file can't be found. :(")
+
+    version.dwnlds += 1
+    version.save()
+    return redirect(version.file.url)
 
 
 def about(request):

@@ -93,7 +93,11 @@ class FileVersion(models.Model):
         return f"{self.blueprint} - version {self.number}"
 
     def get_absolute_url(self):
-        return reverse('warehouse:blueprint', kwargs={'id': self.id})
+        return self.blueprint.get_absolute_url()
+    
+    @property
+    def download_url(self):
+        return reverse('warehouse:download', kwargs={'slug': self.blueprint.slug, 'ver':self.number})
 
     class Meta:
         verbose_name        = "version de fichier"

@@ -12,6 +12,7 @@ urlpatterns = [
     path('blueprint/<str:slug>/edit',            views.bp_edit,   name='blueprint_edit'),
     path('blueprint/<str:slug>',                 views.blueprint, name='blueprint'),
     path('blueprint/<str:slug>/files',           views.files,     name='files'),
+    path('blueprint/<str:slug>/files/<int:ver>', views.download,  name='download'),
     path('blueprint/<str:slug>/fav',             views.fav_edit,  name='fav_edit'),
     path('user/<str:username>',                  views.user,      name='user'),
     path('user/<str:username>/edit',             views.user_edit, name='user_edit'),
