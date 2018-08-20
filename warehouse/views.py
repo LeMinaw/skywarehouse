@@ -2,17 +2,10 @@ from django.shortcuts       import render, redirect
 from django.core.paginator  import Paginator
 from django.http            import Http404, JsonResponse
 from django.core.exceptions import PermissionDenied
-from math                   import ceil
 from random                 import random
 from operator               import attrgetter
 from warehouse.forms        import *
 from warehouse.models       import *
-
-
-def nest(iterable, count):
-    """Makes a list of lists of <count> elements out of an input <iterable>."""
-    outLen = int(ceil(len(iterable) / count))
-    return [iterable[i * count : (i+1) * count] for i in range(outLen)]
 
 
 def home(request):
