@@ -64,7 +64,7 @@ def blueprint(request, slug):
         blueprint = Blueprint.objects.get(slug=slug)
     except Blueprint.DoesNotExist:
         raise Http404("This blueprint does not exists. :(")
-
+    
     return render(request, "warehouse/blueprint.html", locals())
 
 
@@ -83,7 +83,7 @@ def bp_edit(request, slug=None):
             blueprint = Blueprint.objects.get(slug=slug)
         except Blueprint.DoesNotExist:
             raise Http404("This blueprint does not exists. :(")
-
+        
         blueprint_form = BlueprintForm(
                 request.POST or None,
                 request.FILES or None,
@@ -95,18 +95,18 @@ def bp_edit(request, slug=None):
             raise PermissionDenied("You are not allowed to edit this blueprint. Try to log in.")
 
         if request.method == "POST" and blueprint_form.is_valid():
-                blueprint_form.save()
+            blueprint_form.save()
             if 'file' in blueprint_form.changed_data:
                 new_version_number = blueprint.last_file_version.number + 1
                 file_version = FileVersion(file=request.FILES['file'], blueprint=blueprint, number=new_version_number)
-                    file_version.save()
+                file_version.save()
             action = "modified"
             return render(request, "warehouse/bp_edit_done.html", locals())
 
-        else:
+    else:
         if not request.user.is_authenticated:
             raise PermissionDenied("Please log in before adding a blueprint.") # TODO: Use login decorator
-
+        
         blueprint_form = BlueprintForm(request.POST or None, request.FILES or None)
         
         if request.method == "POST" and blueprint_form.is_valid():
@@ -130,8 +130,22 @@ def user(request, username):
     return render(request, "warehouse/user.html", locals())
 
 
-def useredit(request, username):
-    pass
+def user_edit(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        raise Http404("No user matched your query.")
+    
+    if request.user != user:
+        raise PermissionDenied("You are not allowed to edit this profile. Try to log in.")
+    
+    user_form = UserForm(request.POST or None, request.FILES or None, instance=user)
+
+    if request.method == "POST" and user_form.is_valid():
+        user_form.save()
+        return render(request, "warehouse/user_edit_done.html", locals())
+    
+    return render(request, "warehouse/user_edit.html", locals())
 
 
 def about(request):

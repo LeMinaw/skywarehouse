@@ -1,0 +1,40 @@
+{% extends "skywarehouse/base.html" %}
+
+{% load materialize %}
+
+{% block title %}
+{% endblock %}
+
+{% block tab-user %}
+  class="active"
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <h1>User control panel: {{ user.username }}</h1>
+    </div>
+
+    <div class="row card">
+      <div class="card-content">
+        <h4>User actions</h4>
+        <p class="flow-text"><a href="{% url 'logout' %}">Log out</a></p>
+        <p class="flow-text"><a href="{% url 'password_change' %}">Change password</a></p>
+      </div>
+    </div>
+
+    <div class="row card">
+      <div class="card-content">
+        <h4>Profile edition</h4>
+        <form class="card-content" enctype="multipart/form-data" name="user_form" action="" method="post">
+          {% csrf_token %}
+          {{ user_form.bio   |as_material:"s12" }}
+          {{ user_form.avatar|as_material:"s12" }}
+          <div class="form-actions center-align">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

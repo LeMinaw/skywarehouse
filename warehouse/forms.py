@@ -37,3 +37,17 @@ class BlueprintForm(forms.ModelForm):
             'image':  "Cover picture",
             'desc':   "Description"
         }
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['bio', 'avatar']
+        labels = {
+            'bio':    "Bio",
+            'avatar': "Profile picture"
+        }
+        help_texts = {
+            'bio': "Write a few lines to describe yourself.",
+            'avatar': "Max size is 1MB."
+        }

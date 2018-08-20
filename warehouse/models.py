@@ -1,12 +1,13 @@
-from django.db                  import models
-from django.db.models           import Sum
-from django.urls                import reverse
-from django.utils.text          import slugify
-from django.core.validators     import MaxValueValidator
-from django.contrib.auth.models import AbstractUser
-from statistics                 import mean
-from warehouse.validators       import *
-from warehouse.fields           import *
+from django.db                      import models
+from django.db.models               import Sum
+from django.urls                    import reverse
+from django.utils.text              import slugify
+from django.core.validators         import MaxValueValidator
+from django.contrib.auth.models     import AbstractUser
+from statistics     import mean
+from django_resized import ResizedImageField
+from warehouse.validators import *
+from warehouse.fields     import *
 
 
 class Blueprint(models.Model):
@@ -142,9 +143,13 @@ class Review(models.Model):
 
 
 class User(AbstractUser):
-    avatar = models.ImageField     (upload_to='avatars/', validators=[MaxFileSizeValidator()], blank=True, verbose_name="avatar" )
-    bio    = models.TextField      (default='',                                                blank=True, verbose_name="bio"    )
-    favs   = models.ManyToManyField('Blueprint', related_name='fans',                                      verbose_name="favoris")
+    avatar = ResizedImageField(
+        validators=[MaxFileSizeValidator(1024**2)],
+        size=(400, 400), crop=('top', 'left'),
+        upload_to='avatars/', blank=True, verbose_name="avatar"
+    )
+    bio    = models.TextField      (default='',  blank=True,          verbose_name="bio"    )
+    favs   = models.ManyToManyField('Blueprint', related_name='fans', verbose_name="favoris")
 
     # Disable default AbstractUser fields
     first_name = None
