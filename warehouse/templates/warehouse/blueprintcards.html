@@ -22,9 +22,13 @@
           </div>
         </a>
         <div class="card-action">
-          <a href="javascript:;"                               class="black-text hover"><i class="material-icons">favorite_border</i></a>
-          <a href="{{ blueprint.last_file_version.file.url }}" class="black-text hover"><i class="material-icons">file_download</i></a>
-          <a href="javascript:;"                               class="black-text hover"><i class="material-icons activator right">more_vert</i></a>
+          <a href="{% url 'warehouse:fav_edit' slug=blueprint.slug %}" class="black-text hover fav"><i class="material-icons">
+            {% if blueprint in request.user.favs.all %}
+              favorite
+            {% else %}
+              favorite_border
+            {% endif %}
+          </i></a>
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">{{ blueprint.name }}<i class="material-icons right">close</i></span>

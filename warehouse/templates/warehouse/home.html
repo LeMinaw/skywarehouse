@@ -1,4 +1,5 @@
 {% extends "skywarehouse/base.html" %}
+
 {% load staticfiles %}
 
 {% block tab-home %}
@@ -29,4 +30,8 @@
   </div>
 
   {% include "warehouse/action_button.html" with link='warehouse:blueprint_add' icon="file_upload" action="Upload blueprint" %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'warehouse/js/favs.js' %}"></script>
 {% endblock %}

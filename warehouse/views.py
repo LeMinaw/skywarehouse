@@ -1,6 +1,6 @@
 from django.shortcuts       import render
 from django.core.paginator  import Paginator
-from django.http            import Http404
+from django.http            import Http404, JsonResponse
 from django.core.exceptions import PermissionDenied
 from math                   import ceil
 from random                 import random
@@ -146,6 +146,26 @@ def user_edit(request, username):
         return render(request, "warehouse/user_edit_done.html", locals())
     
     return render(request, "warehouse/user_edit.html", locals())
+
+
+def fav_edit(request, slug):
+    if not request.user.is_authenticated:  # TODO: Use login decorator
+        raise PermissionDenied("Please log in before modifying your favorites.")
+    
+    try:
+        blueprint = Blueprint.objects.get(slug=slug)
+        user = User.objects.get(username=request.user.username)
+    except (Blueprint.DoesNotExist, User.DoesNotExist):
+        raise Http404("Something went wrong with this request.")
+    
+    if blueprint in user.favs.all():
+        user.favs.remove(blueprint)
+        now_fav = False
+    else:
+        user.favs.add(blueprint)
+        now_fav = True
+    
+    return JsonResponse({'now_fav': now_fav})
 
 
 def about(request):

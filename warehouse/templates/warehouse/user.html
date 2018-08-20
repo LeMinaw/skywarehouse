@@ -76,3 +76,7 @@
     {% include "warehouse/action_button.html" with link='warehouse:user_edit' param=user.username icon='edit' action="Edit profile" %}
   {% endif %}
 {% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'warehouse/js/favs.js' %}"></script>
+{% endblock %}
