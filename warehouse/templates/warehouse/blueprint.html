@@ -19,7 +19,13 @@
         </div>
         <div class="col s12 m3">
           <h1 class="right">
-            <a href="javascript:;" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3"><i class="material-icons">favorite_border</i></a>
+            <a href="{% url 'warehouse:fav_edit' slug=blueprint.slug %}" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3 fav"><i class="material-icons">
+              {% if blueprint in request.user.favs.all %}
+                favorite
+              {% else %}
+                favorite_border
+              {% endif %}
+            </i></a>
             <a href="{{ blueprint.last_file_version.download_url }}" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3"><i class="material-icons">file_download</i></a>
             <a href="{% url 'warehouse:files' slug %}" class="btn-floating btn-large waves-effect waves-light deep-purple lighten-3"><i class="material-icons">folder_open</i></a>
           </h1>
@@ -94,4 +100,8 @@
   {% if request.user == blueprint.author %}
     {% include "warehouse/action_button.html" with link='warehouse:blueprint_edit' param=blueprint.slug icon='edit' action="Edit blueprint" %}
   {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'warehouse/js/favs.js' %}"></script>
 {% endblock %}
