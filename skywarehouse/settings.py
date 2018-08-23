@@ -17,7 +17,7 @@ SECRET_KEY = 'DevKey'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "skywarehouse.herokuapp.com", ".skyware.house", ".amazonaws.com"]
+ALLOWED_HOSTS = ["localhost", "skyware.herokuapp.com", ".skyware.house", ".amazonaws.com"]
 
 
 # Application definition
@@ -118,11 +118,11 @@ LOCALE_PATH = (
 
 # AWS settings
 
-AWS_ACCESS_KEY_ID = ""
+AWS_ACCESS_KEY_ID = "AKIAI545BHAIKSSSML3Q"
 
-AWS_SECRET_ACCESS_KEY = ""
+AWS_SECRET_ACCESS_KEY = "secretKey"
 
-AWS_STORAGE_BUCKET_NAME = ""
+AWS_STORAGE_BUCKET_NAME = "skywarehouse"
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
