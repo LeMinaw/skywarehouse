@@ -128,8 +128,8 @@ class Review(models.Model):
     author    = models.ForeignKey   ('User',      on_delete=models.CASCADE, related_name='reviews', verbose_name="auteur")
 
     # TODO: Custom field type implementing this custom validator
-    aesthetic_grade = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design intérieur")
-    technic_grade   = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note design extérieur")
+    aesthetic_grade = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note esthétique")
+    technic_grade   = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note technique")
 
     def __str__(self):
         return f"{self.blueprint} - {self.id}"

@@ -3,6 +3,8 @@ $(document).ready(function() {
 
     $('.parallax').parallax();
 
+    $('.collapsible').collapsible();
+
     $('ul.tabs').tabs({swipeable: true});
 
     $('.tooltipped').tooltip({delay: 50});

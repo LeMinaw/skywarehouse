@@ -22,7 +22,17 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
-        labels = {'content': "Your comment"}
+        labels = {'content': "Type your comment here..."}
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['aesthetic_grade', 'technic_grade']
+        labels = {
+            'aesthetic_grade': "Aesthetic grade, /5",
+            'technic_grade': "Technic grade, /5"
+        }
 
 
 class BlueprintForm(forms.ModelForm):

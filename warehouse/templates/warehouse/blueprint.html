@@ -1,6 +1,7 @@
 {% extends "skywarehouse/base.html" %}
 
 {% load staticfiles %}
+{% load materialize %}
 
 {% block title %}
   {{ blueprint.name }}
@@ -31,6 +32,7 @@
           </h1>
         </div>
       </div>
+
       <div class="row">
         <div class="col s12 m9">
           {% if blueprint.image %}
@@ -39,30 +41,79 @@
             <img class="responsive-img" src="{% static 'warehouse/img/nopic.png' %}">
           {% endif %}
           <p class="flow-text">{{ blueprint.desc }}</p>
+          
           <h2>Grades</h2>
           <div class="row">
-            <div class="col s12 m6">
+            <div class="col s12 m6 l4">
               {% include "warehouse/meter.html" with tooltip="Aesthetics grade" icon="brush" value=blueprint.aesthetic_grade %}
             </div>
-            <div class="col s12 m6">
+            <div class="col s12 m6 l4">
               {% include "warehouse/meter.html" with tooltip="Technic grade" icon="build" value=blueprint.technic_grade %}
             </div>
-            <div class="col s12">
+            <div class="col s12 l4">
               {% include "warehouse/meter.html" with tooltip="Overall grade" icon="star" value=blueprint.total_grade %}
             </div>
           </div>
-          <h2>Comments</h2>
+
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header {% if 'review' in request.POST and review is none %}active{% endif %}"><i class="material-icons">poll</i>Review this ship</div>
+              <div class="collapsible-body">
+                {% if request.user.is_authenticated %}
+                  {% if old_review is not none %}
+                    <span class="card-title">You already made a review of this blueprint. You can edit it nevertheless.</span>
+                  {% endif %}
+                  <form name="review_form" action="" method="post">
+                    {% csrf_token %}
+                    {{ review_form.aesthetic_grade|as_material:"s12 m6" }}
+                    {{ review_form.technic_grade|as_material:"s12 m6" }}
+                    <div class="form-actions">
+                      <button type="submit" name="{{review_form.prefix}}" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+                {% else %}
+                  <span class="card-title">You must be <a href="{% url 'login' %}">logged in</a> to review blueprints.</span>
+                {% endif %}
+              </div>
+            </li>
+          </ul>
+
+          <h2>Comments ({{ blueprint.comments.all.count }})</h2>
+          <div class="card">
+            <div class="card-content">
+              {% if request.user.is_authenticated %}
+                <span class="card-title">Add a comment!</span>
+                <form name="comment_form" action="" method="post">
+                  {% csrf_token %}
+                  {{ comment_form.content|as_material:"s12" }}
+                  <div class="form-actions">
+                    <button type="submit" name="{{comment_form.prefix}}" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              {% else %}
+                <span class="card-title">You must be <a href="{% url 'login' %}">logged in</a> to comment.</span>
+              {% endif %}
+            </div>
+          </div>
           {% for comment in blueprint.comments.all %}
             <div class="card">
               <div class="card-content">
-                <span class="card-title">
-                  <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>, the {{ comment.added }}
-                </span>
-                <p>{{ comment.content }}</p>
+                <div class="row">
+                  <div class="col s2 m1">
+                    <img src="{{ comment.author.avatar.url }}" alt="{{ comment.author }}'s avatar" class="responsive-img circle">
+                  </div>
+                  <div class="col s10 m11">
+                    <span class="card-title">
+                      <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>, the {{ comment.added }}
+                    </span>
+                    <p>{{ comment.content }}</p>
+                  </div>
+                </div>
               </div>
             </div>
           {% endfor %}
         </div>
+
         <div class="col s12 m3">
           <table class="bordered">
             <tbody>
@@ -104,4 +155,10 @@
 
 {% block scripts %}
   <script src="{% static 'warehouse/js/favs.js' %}"></script>
+  {% if comment is not none %}
+    <script>Materialize.toast("Comment added. Thank you!", 5000);</script>
+  {% endif %}
+  {% if review is not none %}
+    <script>Materialize.toast("Review modified. Thank you!", 5000);</script>
+  {% endif %}
 {% endblock %}

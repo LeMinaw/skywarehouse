@@ -57,6 +57,34 @@ def blueprint(request, slug):
         blueprint = Blueprint.objects.get(slug=slug)
     except Blueprint.DoesNotExist:
         raise Http404("This blueprint does not exists. :(")
+
+    if request.method == 'POST' and not request.user.is_authenticated:
+        raise PermissionDenied("You must be logged in to comment or review.")
+
+    old_review = None
+    if request.user.is_authenticated:
+        try:
+            old_review = blueprint.reviews.get(author=request.user)
+        except Review.DoesNotExist:
+            pass
+    review_form  = ReviewForm (prefix='review', instance=old_review)
+    comment_form = CommentForm(prefix='comment')
+
+    if 'review' in request.POST:
+        review_form = ReviewForm(request.POST, prefix='review', instance=old_review)
+    if 'comment' in request.POST:
+        comment_form = CommentForm(request.POST, prefix='comment')
+
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.author = request.user
+        comment.blueprint = blueprint
+        comment.save()
+    if review_form.is_valid():
+        review = review_form.save(commit=False)
+        review.author = request.user
+        review.blueprint = blueprint
+        review.save()
     
     return render(request, "warehouse/blueprint.html", locals())
 
