@@ -4,18 +4,20 @@ $(document).ready(function() {
     $('.parallax').parallax();
 
     $('.collapsible').collapsible();
-
-    $('ul.tabs').tabs({swipeable: true});
-
+    
     $('.tooltipped').tooltip({delay: 50});
-
+    
     $('#sort_form select').on("change", function() {
         $('#sort_form').submit();
     });
+    
+});
+
+$(window).on('load', function() {
+    $('ul.tabs').tabs({swipeable: true});
 
     sticky($('#navbar'), $('#placeholder'));
 });
-
 
 function sticky(element, placeholder) {
     let initialPlaceHolder = placeholder.height();
