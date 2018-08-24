@@ -155,6 +155,8 @@ MEDIA_LOCATION = 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+DEFAULT_FROM_EMAIL = 'accounts@skyware.house'
+
 
 # Prod settings
 
