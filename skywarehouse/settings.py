@@ -17,7 +17,7 @@ SECRET_KEY = 'DevKey'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "skyware.herokuapp.com", ".skyware.house", ".amazonaws.com"]
+ALLOWED_HOSTS = ["localhost", "skyware.herokuapp.com", ".skywa.re", ".amazonaws.com"]
 
 
 # Application definition
@@ -155,7 +155,7 @@ MEDIA_LOCATION = 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-DEFAULT_FROM_EMAIL = 'accounts@skyware.house'
+DEFAULT_FROM_EMAIL = 'accounts@skywa.re'
 
 
 # Prod settings
@@ -176,7 +176,7 @@ if os.environ.get("PROD") == 'TRUE':
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'mail.gandi.net'
     EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'accounts@skyware.house'
+    EMAIL_HOST_USER = 'accounts@skywa.re'
     EMAIL_HOST_PASSWORD = os.environ.get("MAIL_PWD")
     EMAIL_USE_TLS = True
 
