@@ -10,7 +10,7 @@ docutils==0.13.1
 future==0.16.0
 gunicorn==19.7.1
 git+https://github.com/python-pillow/Pillow # For django-resized
-psycopg2==2.7.1
+psycopg2==2.7.5
 pyparsing==2.2.0
 python-dateutil==2.6.0
 pytz==2018.3
