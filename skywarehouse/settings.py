@@ -17,7 +17,7 @@ SECRET_KEY = 'DevKey'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "skyware.herokuapp.com", ".skywa.re", ".amazonaws.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "skyware.herokuapp.com", ".skywa.re", ".amazonaws.com"]
 
 
 # Application definition
