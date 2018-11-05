@@ -62,7 +62,7 @@ class ReviewAdmin(admin.ModelAdmin):
             'fields': ('author', 'blueprint')
         }),
         ('Notes', {
-            'fields': (('grade_interior', 'grade_exterior', 'grade_space'), ('grade_mechanics', 'grade_weapons', 'grade_maneuv')),
+            'fields': (('aesthetic_grade', 'technic_grade'),)
         }),
     )
 
