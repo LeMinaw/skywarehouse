@@ -71,6 +71,7 @@ class Blueprint(models.Model):
 class Category(models.Model):
     name   = models.CharField(max_length=64, verbose_name="nom")
     slug   = models.SlugField(               verbose_name="identifiant")
+    index  = models.PositiveSmallIntegerField(default=0, verbose_name="index")
 
     def __str__(self):
         return self.name
@@ -79,6 +80,7 @@ class Category(models.Model):
         return reverse('warehouse:main', kwargs={'slug': self.slug})
 
     class Meta:
+        ordering = ['index', 'id']
         verbose_name = "catégorie"
 
 

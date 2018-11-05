@@ -78,10 +78,10 @@ class FileVersionAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug')
+    list_display = ('__str__', 'index', 'slug')
     fieldsets = (
         (None, {
-            'fields': ('name', 'slug')
+            'fields': ('name', 'index', 'slug')
         }),
     )
 
