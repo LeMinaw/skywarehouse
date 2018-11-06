@@ -9,5 +9,99 @@
 {% endblock %}
 
 {% block content %}
-  <p class="flow-text">About page overhere.</p>
+  <p class="flow-text">This website is a beta version. Bugs are expected.</p>
+  <ul class="collapsible flow-text">
+    <li>
+      <div class="collapsible-header"><b>I found a bug!</b></div>
+      <div class="collapsible-body"><span>
+        Sorry to hear that! You can report it on the <a
+        href="https://github.com/LeMinaw/skywarehouse/issues">github bug tracker</a>.<br/>
+        Please.</span></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><b>Can I suggest you something?</b></div>
+      <div class="collapsible-body"><span>
+        Sure, suggestions and ideas are very welcome! Just use the <a
+        href="https://github.com/LeMinaw/skywarehouse/issues">github tracker</a>. :)
+      </span></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><b>How is this licensed?</b></div>
+      <div class="collapsible-body"><span>
+        This website is free, open-sourced software. It's released under the <a
+        href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public Licence v3
+        </a> (GPLv3). You're encouraged to contribute if you can. The entiere source is
+        avalaible on <a href="https://github.com/LeMinaw/skywarehouse">github</a>.
+      </span></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><b>What are involved techs?</b></div>
+      <div class="collapsible-body"><span>
+        The backend is programmed in <a href="https://www.python.org/">Python</a>, using
+        the framework <a href="https://www.djangoproject.com/">Django</a>.<br/>The
+        frontend relies on the <a href="https://materializecss.com/">Materialize</a>
+        framework.<br/>This website is hosted by <a href="https://heroku.com/">Heroku</a>
+        and <a href="https://aws.amazon.com">AWS</a>.
+      </span></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><b>Who are you?</b></div>
+      <div class="collapsible-body"><span>
+        I'm LeMinaw, and I do webdev mainly as a hobby. I made the official Skywanderers
+        website and forums. I also made some little things for the Skywanderers community,
+        such as our loved Discord bot or our automated redeem system.
+      </span></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><b>How can I contact you?</b></div>
+      <div class="collapsible-body"><span>
+        Just drop an email at <a href="mailto://contact@skywa.re">contact@skywa.re</a>.
+      </span></div>
+    </li>
+    
+    <li>
+      <div class="collapsible-header"><b>Who pays for this?</b></div>
+      <div class="collapsible-body"><span>
+        In short: me. I don't like ads, and I don't like to ask for money.
+      </span></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><b>Y U DO DIS?</b></div>
+      <div class="collapsible-body"><span>
+        First because I like Tsunamayo and Skywanderers, and wanted to help both succeed.
+        Then because I discovered a whole community I love, and want to offer it a nice
+        way of sharing things :)
+      </span></div>
+    </li>
+  </ul>
+
+  <div class="center-align section">
+    <img class="padding" src="https://www.python.org/static/community_logos/python-powered-w-140x56.png" alt="Python logo">
+  </div>
+
+  {% comment %}
+    <div class="row">
+      <div class="col s12 m4">
+          <div class="center-align">
+            <img class="" src="https://www.gnu.org/graphics/gplv3-with-text-136x68.png" alt="GNU GPLv3 logo">
+          </div>
+      </div>
+      <div class="col s12 m4">
+          <div class="center-align">
+            <img class="" src="https://www.python.org/static/community_logos/python-powered-w-140x56.png" alt="Python logo">
+          </div>
+      </div>
+      <div class="col s12 m4">
+          <div class="center-align">
+            <img class="" src="https://www.djangoproject.com/m/img/badges/djangopowered126x54.gif" alt="Django logo">
+          </div>
+      </div>
+    </div>
+  {% endcomment %}
 {% endblock %}
