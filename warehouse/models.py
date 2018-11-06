@@ -148,6 +148,9 @@ class Review(models.Model):
         unique_together = ('blueprint', 'author')
 
 
+# We need this hack to make unique=true on email field without editing AbstractUser
+AbstractUser._meta.get_field('email')._unique = True
+
 class User(AbstractUser):
     avatar = ResizedImageField(
         validators=[MaxFileSizeValidator(1024**2)],
