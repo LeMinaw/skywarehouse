@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from warehouse.models import *
+from warehouse.models import Comment, Review, Blueprint, User
 
 class ListSortForm(forms.Form):
     sort_orders = (
