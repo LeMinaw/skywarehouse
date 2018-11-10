@@ -2,7 +2,7 @@ from django.db                      import models
 from django.db.models               import Sum
 from django.urls                    import reverse
 from django.utils.text              import slugify
-from django.core.validators         import MaxValueValidator
+from django.core.validators         import MaxValueValidator, FileExtensionValidator
 from django.contrib.auth.models     import AbstractUser
 from statistics     import mean
 from django_resized import ResizedImageField
@@ -11,15 +11,28 @@ from warehouse.fields     import *
 
 
 class Blueprint(models.Model):
-    added  = models.DateTimeField(auto_now_add=True,                                                    verbose_name="date d'ajout")
-    modif  = models.DateTimeField(auto_now=True,                                                        verbose_name="date d'édition")
-    categ  = models.ForeignKey   ('Category', on_delete=models.CASCADE, related_name='blueprints',      verbose_name="catégorie")
-    author = models.ForeignKey   ('User',     on_delete=models.CASCADE, related_name="blueprints",      verbose_name="auteur")
-    name   = models.CharField    (max_length=64,                                                        verbose_name="nom")
-    slug   = models.SlugField    (                                                                      verbose_name="identifiant")
-    image  = models.ImageField   (upload_to='covers/', validators=[MaxFileSizeValidator()], blank=True, verbose_name="vignette")
-    desc   = models.TextField    (blank=True, default='',                                               verbose_name="description")
-    pin    = models.BooleanField (default=False,                                                        verbose_name="épinglé")
+    added = models.DateTimeField(auto_now_add=True, verbose_name="date d'ajout")
+    modif = models.DateTimeField(auto_now=True,     verbose_name="date d'édition")
+    categ  = models.ForeignKey('Category',
+        on_delete=models.CASCADE,
+        related_name='blueprints',
+        verbose_name="catégorie"
+    )
+    author = models.ForeignKey('User',
+        on_delete=models.CASCADE,
+        related_name='blueprints',
+        verbose_name="auteur"
+    )
+    name   = models.CharField(max_length=64, verbose_name="nom")
+    slug   = models.SlugField(verbose_name="identifiant")
+    image  = models.ImageField(
+        upload_to='covers/',
+        validators=[MaxFileSizeValidator()],
+        blank=True,
+        verbose_name="vignette"
+    )
+    desc   = models.TextField(blank=True, default='', verbose_name="description")
+    pin    = models.BooleanField(default=False, verbose_name="épinglé")
 
     def __str__(self):
         return self.name
@@ -85,11 +98,28 @@ class Category(models.Model):
 
 
 class FileVersion(models.Model):
-    added     = models.DateTimeField            (auto_now_add=True,                                                   verbose_name="date d'ajout")
-    blueprint = models.ForeignKey               ('Blueprint', on_delete=models.CASCADE, related_name='file_versions', verbose_name="plan")
-    file      = models.FileField                (upload_to='blueprints/', validators=[MaxFileSizeValidator()],        verbose_name="fichier")
-    number    = models.PositiveSmallIntegerField(default=1,                                                           verbose_name="numéro de version")
-    dwnlds    = models.PositiveIntegerField     (default=0,                                                           verbose_name="nombre de téléchargements")
+    added     = models.DateTimeField(
+        auto_now_add = True,
+        verbose_name = "date d'ajout"
+    )
+    blueprint = models.ForeignKey('Blueprint',
+        on_delete = models.CASCADE,
+        related_name = 'file_versions',
+        verbose_name = "plan"
+    )
+    file = models.FileField(
+        upload_to='blueprints/',
+        validators=[MaxFileSizeValidator(), FileExtensionValidator(('swbp', 'mps'))],
+        verbose_name="fichier"
+    )
+    number = models.PositiveSmallIntegerField(
+        default=1,
+        verbose_name="numéro de version"
+    )
+    dwnlds = models.PositiveIntegerField(
+        default=0,
+        verbose_name="nombre de téléchargements"
+    )
 
     def __str__(self):
         return f"{self.blueprint} - version {self.number}"
@@ -99,7 +129,9 @@ class FileVersion(models.Model):
     
     @property
     def download_url(self):
-        return reverse('warehouse:download', kwargs={'slug': self.blueprint.slug, 'ver':self.number})
+        return reverse('warehouse:download',
+            kwargs={'slug': self.blueprint.slug, 'ver':self.number}
+        )
 
     class Meta:
         verbose_name        = "version de fichier"
@@ -108,10 +140,18 @@ class FileVersion(models.Model):
 
 
 class Comment(models.Model):
-    added     = models.DateTimeField(auto_now_add=True,                                              verbose_name="date d'ajout")
-    blueprint = models.ForeignKey   ('Blueprint', on_delete=models.CASCADE, related_name='comments', verbose_name="plan")
-    author    = models.ForeignKey   ('User', on_delete=models.CASCADE, related_name='comments',      verbose_name="auteur")
-    content   = models.TextField    (                                                                verbose_name="contenu")
+    added     = models.DateTimeField(auto_now_add=True, verbose_name="date d'ajout")
+    blueprint = models.ForeignKey('Blueprint',
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name="plan"
+    )
+    author = models.ForeignKey('User',
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name="auteur"
+    )
+    content = models.TextField(verbose_name="contenu")
 
     def __str__(self):
         return f"{self.blueprint} - {self.id}"
@@ -125,13 +165,27 @@ class Comment(models.Model):
 
 
 class Review(models.Model):
-    added     = models.DateTimeField(auto_now_add=True,                                             verbose_name="date d'ajout")
-    blueprint = models.ForeignKey   ('Blueprint', on_delete=models.CASCADE, related_name='reviews', verbose_name="plan")
-    author    = models.ForeignKey   ('User',      on_delete=models.CASCADE, related_name='reviews', verbose_name="auteur")
+    added = models.DateTimeField(auto_now_add=True, verbose_name="date d'ajout")
+    blueprint = models.ForeignKey('Blueprint',
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        verbose_name="plan"
+    )
+    author = models.ForeignKey('User',
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        verbose_name="auteur"
+    )
 
     # TODO: Custom field type implementing this custom validator
-    aesthetic_grade = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note esthétique")
-    technic_grade   = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], verbose_name="note technique")
+    aesthetic_grade = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(5)],
+        verbose_name="note esthétique"
+    )
+    technic_grade = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(5)],
+        verbose_name="note technique"
+    )
 
     def __str__(self):
         return f"{self.blueprint} - {self.id}"
@@ -157,8 +211,8 @@ class User(AbstractUser):
         size=(400, 400), crop=('top', 'left'),
         upload_to='avatars/', blank=True, verbose_name="avatar"
     )
-    bio    = models.TextField      (default='',  blank=True,          verbose_name="bio"    )
-    favs   = models.ManyToManyField('Blueprint', related_name='fans', verbose_name="favoris")
+    bio = models.TextField(default='', blank=True, verbose_name="bio")
+    favs= models.ManyToManyField('Blueprint', related_name='fans', verbose_name="favoris")
 
     # Disable default AbstractUser fields
     first_name = None
