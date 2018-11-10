@@ -128,6 +128,14 @@ class FileVersion(models.Model):
         return self.blueprint.get_absolute_url()
     
     @property
+    def save_format(self):
+        if self.file.name.lower().endswith('.swbp'):
+            return 1
+        if self.file.name.lower().endswith('.mps'):
+            return 2
+        return None
+    
+    @property
     def download_url(self):
         return reverse('warehouse:download',
             kwargs={'slug': self.blueprint.slug, 'ver':self.number}
