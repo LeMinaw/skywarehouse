@@ -6,7 +6,7 @@ from random                 import random
 from operator               import attrgetter
 from warehouse.forms        import *
 from warehouse.models       import *
-
+from warehouse.webhooks     import webhook
 
 def home(request):
     blueprints_popular  = sorted(list(Blueprint.objects.all()), key=attrgetter('dwnlds'), reverse=True)[:3]
@@ -136,6 +136,7 @@ def bp_edit(request, slug=None):
             blueprint.save()
             file_version = FileVersion(file=request.FILES['file'], blueprint=blueprint)
             file_version.save()
+            webhook.send_new_blueprint(blueprint, request)
             action = "added"
             return render(request, "warehouse/bp_edit_done.html", locals())
 

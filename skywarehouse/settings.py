@@ -158,6 +158,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'accounts@skywa.re'
 
 
+# Discord Webhooks
+
+WEBHOOK_ID = '510526593702297634'
+
+WEBHOOK_TOKEN = os.environ.get("WEBHOOK_TOKEN")
+
+
 # Prod settings
 
 if os.environ.get("PROD") == 'TRUE':
@@ -179,6 +186,8 @@ if os.environ.get("PROD") == 'TRUE':
     EMAIL_HOST_USER = 'accounts@skywa.re'
     EMAIL_HOST_PASSWORD = os.environ.get("MAIL_PWD")
     EMAIL_USE_TLS = True
+
+    WEBHOOK_ID = '510603302593888257'
 
     STATICFILES_STORAGE = 'skywarehouse.custom_storages.StaticStorage'
 
