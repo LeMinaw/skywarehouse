@@ -35,7 +35,7 @@ class ReviewForm(forms.ModelForm):
 
 
 class BlueprintForm(forms.ModelForm):
-    file = forms.FileField(required=True, label="File (SWBP)")
+    file = forms.FileField(required=True, label="File (MPS/SWBP)")
 
     class Meta:
         model = Blueprint
