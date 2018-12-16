@@ -30,9 +30,9 @@ class WarehouseWebhook(Webhook):
         embed.set_author(
             name = bp.author,
             url = domain + bp.author.get_absolute_url(),
-            icon_url = domain + avatar_url
+            icon_url = avatar_url
         )
-        embed.set_image(url=domain + thumbnail_url)
+        embed.set_image(url=thumbnail_url)
         embed.set_footer(text="Skywa.re - The Skywanderers Blueprints archive")
         print(f"Sending webhook:\n{embed.to_dict()}")
         self.send(embed=embed)
