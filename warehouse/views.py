@@ -136,7 +136,7 @@ def bp_edit(request, slug=None):
             blueprint.save()
             file_version = FileVersion(file=request.FILES['file'], blueprint=blueprint)
             file_version.save()
-            webhook.send_new_blueprint(blueprint, request)
+            webhook.send_new_blueprint(blueprint)
             action = "added"
             return render(request, "warehouse/bp_edit_done.html", locals())
 
