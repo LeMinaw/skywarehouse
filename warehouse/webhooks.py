@@ -19,7 +19,7 @@ class WarehouseWebhook(Webhook):
         else:
             thumbnail_url = static('warehouse/img/nopic.png')
         
-        domain = "http://www.skywa.re" #TODO: Maybe using the sites framework?
+        domain = "http://skywa.re" #TODO: Maybe using the sites framework?
         
         embed = Embed(
             title = f"{bp.categ}: {bp}",
@@ -34,6 +34,7 @@ class WarehouseWebhook(Webhook):
         )
         embed.set_image(url=domain + thumbnail_url)
         embed.set_footer(text="Skywa.re - The Skywanderers Blueprints archive")
+        print(f"Sending webhook:\n{embed.to_dict()}")
         self.send(embed=embed)
 
 
