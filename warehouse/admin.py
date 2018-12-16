@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AbstractUserAdmin
-from warehouse.models import *
-
+from warehouse.models   import *
+from warehouse.webhooks import webhook
 
 class FileVersionInline(admin.TabularInline):
     model = FileVersion
@@ -29,7 +29,9 @@ class UserAdmin(AbstractUserAdmin):
             'fields': ('email', 'avatar', 'bio')
         }),
         ('Permissions', {
-            'fields': (('is_active', 'is_staff', 'is_superuser'), 'groups', 'user_permissions'),
+            'fields': (
+                ('is_active', 'is_staff', 'is_superuser'),
+                'groups', 'user_permissions'),
             'classes': ('collapse',)
         }),
         ('Chronologie', {
@@ -43,6 +45,7 @@ class BlueprintAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'categ', 'author', 'pin')
     list_filter = ('slug', 'categ', 'author', 'pin')
     date_hierarchy = 'added'
+    actions = ['send_webhook']
     fieldsets = (
         (None, {
             'fields': ('name', 'slug', 'categ', 'author')
@@ -52,6 +55,12 @@ class BlueprintAdmin(admin.ModelAdmin):
         }),
     )
     inlines = [FileVersionInline, ReviewInline, CommentInline]
+
+    def send_webhook(self, request, queryset):
+        for bp in queryset:
+            webhook.send_new_blueprint(bp)
+        self.message_user(request, f"{len(queryset)} webhooks sent!")
+    send_webhook.short_description = "Send the 'new blueprint added' webhook"
 
 
 class ReviewAdmin(admin.ModelAdmin):
