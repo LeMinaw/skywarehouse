@@ -112,7 +112,7 @@
                     <span class="card-title">
                       <a href="{{ comment.author.get_absolute_url }}">{{ comment.author }}</a>, {{ comment.added }}
                     </span>
-                    <p>{{ comment.content }}</p>
+                    <p>{{ comment.content|linebreaksbr|urlize }}</p>
                   </div>
                 </div>
               </div>
