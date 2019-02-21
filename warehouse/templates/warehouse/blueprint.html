@@ -40,7 +40,7 @@
           {% else %}
             <img class="responsive-img" src="{% static 'warehouse/img/nopic.png' %}">
           {% endif %}
-          <p class="flow-text">{{ blueprint.desc }}</p>
+          <p class="flow-text">{{ blueprint.desc|linebreaksbr|urlize }}</p>
           
           <h2>Grades</h2>
           <div class="row">
