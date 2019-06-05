@@ -3,6 +3,12 @@ from django.contrib.auth.admin import UserAdmin as AbstractUserAdmin
 from warehouse.models   import *
 from warehouse.webhooks import webhook
 
+
+admin.site.site_title = "Skywa.re admin"
+admin.site.site_header = "Skywa.re administration"
+admin.site.index_title = "Skywanderers blueprint archive admin panel"
+
+
 class FileVersionInline(admin.TabularInline):
     model = FileVersion
     extra = 0
