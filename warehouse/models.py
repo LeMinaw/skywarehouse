@@ -11,28 +11,27 @@ from warehouse.fields     import *
 
 
 class Blueprint(models.Model):
-    added = models.DateTimeField(auto_now_add=True, verbose_name="date d'ajout")
-    modif = models.DateTimeField(auto_now=True,     verbose_name="date d'édition")
+    added = models.DateTimeField(auto_now_add=True, verbose_name="date added")
+    modif = models.DateTimeField(auto_now=True,     verbose_name="date edited")
     categ  = models.ForeignKey('Category',
         on_delete=models.CASCADE,
         related_name='blueprints',
-        verbose_name="catégorie"
+        verbose_name="category"
     )
     author = models.ForeignKey('User',
         on_delete=models.CASCADE,
         related_name='blueprints',
-        verbose_name="auteur"
     )
-    name   = models.CharField(max_length=64, verbose_name="nom")
-    slug   = models.SlugField(verbose_name="identifiant")
+    name   = models.CharField(max_length=64)
+    slug   = models.SlugField(verbose_name="identifier")
     image  = models.ImageField(
         upload_to='covers/',
         validators=[MaxFileSizeValidator()],
         blank=True,
-        verbose_name="vignette"
+        verbose_name="cover picture"
     )
     desc   = models.TextField(blank=True, default='', verbose_name="description")
-    pin    = models.BooleanField(default=False, verbose_name="épinglé")
+    pin    = models.BooleanField(default=False, verbose_name="pinned")
 
     def __str__(self):
         return self.name
@@ -77,14 +76,11 @@ class Blueprint(models.Model):
     def last_file_version(self):
         return self.file_versions.order_by('-number')[0]
 
-    class Meta:
-        verbose_name = "plan"
-
 
 class Category(models.Model):
-    name   = models.CharField(max_length=64, verbose_name="nom")
-    slug   = models.SlugField(               verbose_name="identifiant")
-    index  = models.PositiveSmallIntegerField(default=0, verbose_name="index")
+    name   = models.CharField(max_length=64)
+    slug   = models.SlugField(verbose_name="identifier")
+    index  = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -94,31 +90,29 @@ class Category(models.Model):
 
     class Meta:
         ordering = ['index', 'id']
-        verbose_name = "catégorie"
+        verbose_name_plural = "categories"
 
 
 class FileVersion(models.Model):
     added     = models.DateTimeField(
         auto_now_add = True,
-        verbose_name = "date d'ajout"
+        verbose_name = "date added"
     )
     blueprint = models.ForeignKey('Blueprint',
         on_delete = models.CASCADE,
-        related_name = 'file_versions',
-        verbose_name = "plan"
+        related_name = 'file_versions'
     )
     file = models.FileField(
         upload_to='blueprints/',
-        validators=[MaxFileSizeValidator(), FileExtensionValidator(('swbp', 'mps'))],
-        verbose_name="fichier"
+        validators=[MaxFileSizeValidator(), FileExtensionValidator(('swbp', 'mps'))]
     )
     number = models.PositiveSmallIntegerField(
         default=1,
-        verbose_name="numéro de version"
+        verbose_name="version number"
     )
     dwnlds = models.PositiveIntegerField(
         default=0,
-        verbose_name="nombre de téléchargements"
+        verbose_name="downloads number"
     )
 
     def __str__(self):
@@ -142,24 +136,21 @@ class FileVersion(models.Model):
         )
 
     class Meta:
-        verbose_name        = "version de fichier"
-        verbose_name_plural = "versions de fichier"
+        verbose_name        = "file version"
         unique_together = ('blueprint', 'number')
 
 
 class Comment(models.Model):
-    added     = models.DateTimeField(auto_now_add=True, verbose_name="date d'ajout")
+    added     = models.DateTimeField(auto_now_add=True, verbose_name="date added")
     blueprint = models.ForeignKey('Blueprint',
         on_delete=models.CASCADE,
         related_name='comments',
-        verbose_name="plan"
     )
     author = models.ForeignKey('User',
         on_delete=models.CASCADE,
         related_name='comments',
-        verbose_name="auteur"
     )
-    content = models.TextField(verbose_name="contenu")
+    content = models.TextField()
 
     def __str__(self):
         return f"{self.blueprint} - {self.id}"
@@ -168,31 +159,28 @@ class Comment(models.Model):
         return self.blueprint.get_absolute_url()
 
     class Meta:
-        verbose_name = "commentaire"
         ordering = ['-added']
 
 
 class Review(models.Model):
-    added = models.DateTimeField(auto_now_add=True, verbose_name="date d'ajout")
+    added = models.DateTimeField(auto_now_add=True, verbose_name="date added")
     blueprint = models.ForeignKey('Blueprint',
         on_delete=models.CASCADE,
         related_name='reviews',
-        verbose_name="plan"
     )
     author = models.ForeignKey('User',
         on_delete=models.CASCADE,
         related_name='reviews',
-        verbose_name="auteur"
     )
 
     # TODO: Custom field type implementing this custom validator
     aesthetic_grade = models.PositiveSmallIntegerField(
         validators=[MaxValueValidator(5)],
-        verbose_name="note esthétique"
+        verbose_name="aesthetic grade"
     )
     technic_grade = models.PositiveSmallIntegerField(
         validators=[MaxValueValidator(5)],
-        verbose_name="note technique"
+        verbose_name="technic grade"
     )
 
     def __str__(self):
@@ -206,7 +194,6 @@ class Review(models.Model):
         return (self.aesthetic_grade + self.technic_grade) / 2
 
     class Meta:
-        verbose_name = "appréciation"
         unique_together = ('blueprint', 'author')
 
 
@@ -217,10 +204,10 @@ class User(AbstractUser):
     avatar = ResizedImageField(
         validators=[MaxFileSizeValidator(1024**2)],
         size=(400, 400), crop=('top', 'left'),
-        upload_to='avatars/', blank=True, verbose_name="avatar"
+        upload_to='avatars/', blank=True
     )
-    bio = models.TextField(default='', blank=True, verbose_name="bio")
-    favs= models.ManyToManyField('Blueprint', related_name='fans', verbose_name="favoris")
+    bio = models.TextField(default='', blank=True)
+    favs = models.ManyToManyField('Blueprint', related_name='fans', verbose_name="favorites")
 
     # Disable default AbstractUser fields
     first_name = None
@@ -236,6 +223,3 @@ class User(AbstractUser):
     @property
     def fans_nb(self):
         return sum([bp.fans.count() or 0 for bp in self.blueprints.all()])
-
-    class Meta:
-        verbose_name = "utilisateur"
