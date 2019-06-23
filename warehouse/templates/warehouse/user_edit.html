@@ -1,6 +1,6 @@
 {% extends "skywarehouse/base.html" %}
 
-{% load materialize %}
+{% load materializecss %}
 
 {% block title %}
 {% endblock %}
@@ -28,8 +28,8 @@
         <h4>Profile edition</h4>
         <form class="card-content" enctype="multipart/form-data" name="user_form" action="" method="post">
           {% csrf_token %}
-          {{ user_form.bio   |as_material:"s12" }}
-          {{ user_form.avatar|as_material:"s12" }}
+          {{ user_form.bio   |materializecss:'s12' }}
+          {{ user_form.avatar|materializecss:'s12' }}
           <div class="form-actions center-align">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>

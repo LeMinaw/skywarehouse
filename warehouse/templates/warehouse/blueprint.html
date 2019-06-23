@@ -1,7 +1,7 @@
 {% extends "skywarehouse/base.html" %}
 
 {% load staticfiles %}
-{% load materialize %}
+{% load materializecss %}
 
 {% block title %}
   {{ blueprint.name }}
@@ -65,8 +65,8 @@
                   {% endif %}
                   <form name="review_form" action="" method="post">
                     {% csrf_token %}
-                    {{ review_form.aesthetic_grade|as_material:"s12 m6" }}
-                    {{ review_form.technic_grade|as_material:"s12 m6" }}
+                    {{ review_form.aesthetic_grade|materializecss:'s12 m6' }}
+                    {{ review_form.technic_grade  |materializecss:'s12 m6' }}
                     <div class="form-actions">
                       <button type="submit" name="{{review_form.prefix}}" class="btn btn-primary">Submit</button>
                     </div>
@@ -85,7 +85,7 @@
                 <span class="card-title">Add a comment!</span>
                 <form name="comment_form" action="" method="post">
                   {% csrf_token %}
-                  {{ comment_form.content|as_material:"s12" }}
+                  {{ comment_form.content|materializecss }}
                   <div class="form-actions">
                     <button type="submit" name="{{comment_form.prefix}}" class="btn btn-primary">Submit</button>
                   </div>

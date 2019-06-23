@@ -1,6 +1,7 @@
 {% extends "skywarehouse/base.html" %}
 
 {% load staticfiles %}
+{% load materializecss %}
 
 {% block title %}
   Blueprints
@@ -22,11 +23,7 @@
   <form id="sort_form" class="row" action="{% url 'warehouse:main' %}" method="post">
     {% csrf_token %}
     {% for field in sort_form %}
-      <div class="input-field col s12 m4">
-        {{ field.errors }}
-        {{ field }}
-        {{ field.label_tag }}
-      </div>
+      {{ field|materializecss:'s12 m4' }}
     {% endfor %}
     <noscript>
       <div class="input-field col s12">
