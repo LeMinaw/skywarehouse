@@ -33,7 +33,7 @@
       </div>
       <div class="black z-depth-3" id="navbar">
         <div class="row container">
-          <ul class="tabs tabs-fixed-width tabs-transparent">
+          <div class="tabs tabs-fixed-width tabs-transparent">
             <li class="tab"><a target="_self" {% block tab-home %}{% endblock %} href="{% url 'warehouse:home' %}">Home</a></li>
             <li class="tab"><a target="_self" {% block tab-blueprints %}{% endblock %} href="{% url 'warehouse:main' %}">Blueprints</a></li>
             <li class="tab"><a target="_self" {% block tab-user %}{% endblock %}
@@ -44,7 +44,7 @@
               {% endif %}
             </a></li>
             <li class="tab"><a target="_self" {% block tab-about %}{% endblock %} href="{% url 'warehouse:about' %}">About</a></li>
-          </ul>
+          </div>
         </div>
       </div>
       <div id="placeholder"></div>
@@ -61,9 +61,9 @@
       </div>
     </footer>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://use.fontawesome.com/329a4b4215.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://use.fontawesome.com/329a4b4215.js"></script>
     <script type="text/javascript" src="{% static 'skywarehouse/js/script.js' %}"></script>
     {% block scripts %}{% endblock %}
   </body>
