@@ -6,15 +6,18 @@ $(document).ready(function() {
     $('.collapsible').collapsible();
     
     $('.tooltipped').tooltip({delay: 50});
+
+    $('.materialboxed').materialbox();
     
     $('#sort_form select').on("change", function() {
         $('#sort_form').submit();
     });
-    
 });
 
 $(window).on('load', function() {
-    $('ul.tabs').tabs({swipeable: true});
+    setTimeout(function() {
+        $('ul.tabs').tabs({swipeable: true});
+    });
 
     sticky($('#navbar'), $('#placeholder'));
 });
