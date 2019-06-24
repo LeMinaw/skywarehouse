@@ -1,5 +1,7 @@
 // out: style.css, sourcemap: false, compress: true
 
+// Global
+
 .ontop {
     position: fixed;
     margin-left: auto;
@@ -10,6 +12,10 @@
     z-index: 100;
     .row.container { margin-bottom: 0 }
 }
+
+.p-top { padding-top: 12px }
+
+// Carousel
 
 .carousel .carousel-item {
   width: 100%;
@@ -38,23 +44,27 @@ footer {
     padding: 30px;
 }
 
-// Global
-
-.p-top { padding-top: 12px }
-
 // Cards
 
 .card {
     meter {
         width: 100%;
         background: #CCC;
-        -webkit-appearance: none;
+        // -webkit-appearance: none;
         -moz-appearance: none;
         border-radius: 3px;
         float: right;
         top: 10px;
     }
-    *::-moz-meter-bar, *::-webkit-meter-bar {
+    ::-webkit-meter-bar {
+        background: #CCC;
+        border-radius: 3px;
+    }
+    ::-moz-meter-bar {
+        background: #212121;
+        border-radius: 3px;
+    }
+    ::-webkit-meter-optimum-value {
         background: #212121;
         border-radius: 3px;
     }
@@ -64,6 +74,7 @@ footer {
 .card > a { color: #212121 }
 
 // Main page buttons
+
 .btn.categ {
     margin-bottom: 5px;
 }
