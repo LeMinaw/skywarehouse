@@ -48,12 +48,13 @@ footer {
     meter {
         width: 100%;
         background: #CCC;
+        -webkit-appearance: none;
         -moz-appearance: none;
         border-radius: 3px;
         float: right;
         top: 10px;
     }
-    *::-moz-meter-bar {
+    *::-moz-meter-bar, *::-webkit-meter-bar {
         background: #212121;
         border-radius: 3px;
     }
