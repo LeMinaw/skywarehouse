@@ -8,19 +8,21 @@ $(document).ready(function() {
     $('.tooltipped').tooltip({delay: 50});
 
     $('.materialboxed').materialbox();
-    
+
     $('#sort_form select').on("change", function() {
         $('#sort_form').submit();
     });
 });
 
 $(window).on('load', function() {
-    setTimeout(function() {
-        $('ul.tabs').tabs({swipeable: true});
-    });
-
+    $('ul.tabs').tabs({ swipeable: true, onShow: resizeTab });
+    
     sticky($('#navbar'), $('#placeholder'));
 });
+
+function resizeTab() {
+    $('.tabs-content').css('height', $('.carousel-item.active .row').height() + 'px');
+}
 
 function sticky(element, placeholder) {
     let initialPlaceHolder = placeholder.height();
