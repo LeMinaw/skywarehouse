@@ -28,7 +28,7 @@ def register(request):
         message = render_to_string("registration/register_email.html", {
             'user': user,
             'domain': request.build_absolute_uri('/')[:-1],
-            'uid': urlsafe_base64_encode(force_bytes(user.username)).decode(),
+            'uid': urlsafe_base64_encode(force_bytes(user.username)),
             'token': AccountActivationTokenGenerator().make_token(user),
         })
         user.email_user(subject, message)

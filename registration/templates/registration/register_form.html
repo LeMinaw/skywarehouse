@@ -11,7 +11,7 @@
   <div class="row">
     <form class="section" method="POST">
       {% csrf_token %}
-      {% form|materializecss %}
+      {{ form|materializecss }}
       <button class="btn waves-effect waves-light" type="submit" name="action">Register
         <i class="material-icons right">send</i>
       </button>
