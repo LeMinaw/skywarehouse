@@ -74,7 +74,10 @@ class Blueprint(models.Model):
 
     @property
     def last_file_version(self):
-        return self.file_versions.order_by('-number')[0]
+        try:
+            return self.file_versions.order_by('-number')[0]
+        except IndexError:
+            return None
 
 
 class Category(models.Model):
