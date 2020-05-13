@@ -3,8 +3,8 @@
 {% load staticfiles %}
 
 <div class="row">
-  {% for blueprint in blueprints %}
-    <div class="col s12 m6 l4">
+  <div class="col s12 cards-container">
+    {% for blueprint in blueprints %}
       <div class="card hoverable sticky-action">
         <a href="{{ blueprint.get_absolute_url }}">
           <div class="card-image">
@@ -43,6 +43,6 @@
           </p>
         </div>
       </div>
-    </div>
-  {% endfor %}
+    {% endfor %}
+  </div>
 </div>
