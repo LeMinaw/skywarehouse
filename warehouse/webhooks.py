@@ -33,7 +33,7 @@ class WarehouseWebhook(Webhook):
             icon_url = avatar_url
         )
         embed.set_image(url=thumbnail_url)
-        embed.set_footer(text="Skywa.re - The Skywanderers Blueprints archive")
+        embed.set_footer(text="Skywa.re - The Starship Evo Blueprints archive")
         print(f"Sending webhook:\n{embed.to_dict()}")
         self.send(embed=embed)
 

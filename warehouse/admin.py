@@ -6,7 +6,7 @@ from warehouse.webhooks import webhook
 
 admin.site.site_title = "Skywa.re admin"
 admin.site.site_header = "Skywa.re administration"
-admin.site.index_title = "Skywanderers blueprint archive admin panel"
+admin.site.index_title = "Starship Evo blueprint archive admin panel"
 
 
 class FileVersionInline(admin.TabularInline):
