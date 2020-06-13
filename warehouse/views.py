@@ -21,11 +21,10 @@ def main(request, slug=None, id=1):
     reverse = True
 
     # Form data processing
-    if request.method == "POST":
-        sort_form = ListSortForm(request.POST)
-        if sort_form.is_valid():
-            reverse = (sort_form.cleaned_data['reverse_order'] == "DSC")
-            sort_by = sort_form.cleaned_data['sort_by']
+    sort_form = ListSortForm(request.GET)
+    if sort_form.is_valid():
+        reverse = (sort_form.cleaned_data['reverse_order'] == "DSC")
+        sort_by = sort_form.cleaned_data['sort_by']
     else:
         sort_form = ListSortForm()
 
@@ -43,8 +42,8 @@ def main(request, slug=None, id=1):
     blueprints = sorted(blueprints, key=sort_fn, reverse=reverse)
 
     # Pagination
-    paginator = Paginator(blueprints, 12)
-    blueprints = paginator.page(id).object_list
+    paginator = Paginator(blueprints, 2)
+    blueprints = paginator.page(id)
 
     # Categories
     categories = Category.objects.all()

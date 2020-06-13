@@ -20,8 +20,7 @@
       {% endfor %}
     </div>
   </div>
-  <form id="sort_form" class="row" action="{% url 'warehouse:main' %}" method="post">
-    {% csrf_token %}
+  <form id="sort_form" class="row" action="" method="get">
     {% for field in sort_form %}
       {{ field|materializecss:'s12 m4' }}
     {% endfor %}
@@ -33,6 +32,64 @@
   </form>
 
   {% include "warehouse/blueprintcards.html" %}
+
+  {% if blueprints.has_other_pages %}
+    <ul class="pagination">
+      {% if blueprints.has_previous %}
+        <li class="waves-effect">
+          <a href="
+            {% if slug %}
+              {% url 'warehouse:main' slug=slug id=blueprints.previous_page_number %}?{{ request.GET.urlencode }}
+            {% else %}
+              {% url 'warehouse:main' id=blueprints.previous_page_number %}?{{ request.GET.urlencode }}
+            {% endif %}
+          {{ request.GET.urlencode }}">
+            <i class="material-icons">chevron_left</i>
+          </a>
+        </li>
+      {% else %}
+        <li class="disabled">
+          <a href="#!"><i class="material-icons">chevron_left</i></a>
+        </li>
+      {% endif %}
+
+      {% for i in blueprints.paginator.page_range %}
+        {% if blueprints.number == i %}
+          <li class="active"><a href="#!">{{ i }}</a></li>
+        {% else %}
+          <li class="waves-effect">
+            <a href="
+              {% if slug %}
+                {% url 'warehouse:main' slug=slug id=i %}?{{ request.GET.urlencode }}
+              {% else %}
+                {% url 'warehouse:main' id=i %}?{{ request.GET.urlencode }}
+              {% endif %}
+            {{ request.GET.urlencode }}">
+              {{ i }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if blueprints.has_next %}
+        <li class="waves-effect">
+          <a href="
+            {% if slug %}
+              {% url 'warehouse:main' slug=slug id=blueprints.next_page_number %}?{{ request.GET.urlencode }}
+            {% else %}
+              {% url 'warehouse:main' id=blueprints.next_page_number %}?{{ request.GET.urlencode }}
+            {% endif %}
+          ">
+            <i class="material-icons">chevron_right</i>
+          </a>
+        </li>
+      {% else %}
+        <li class="disabled">
+          <a href="#!"><i class="material-icons">chevron_right</i></a>
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
 
   {% include "warehouse/action_button.html" with link='warehouse:blueprint_add' icon="file_upload" action="Upload blueprint" %}
 {% endblock %}
