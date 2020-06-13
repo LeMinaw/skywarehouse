@@ -13,8 +13,8 @@ class ListSortForm(forms.Form):
         ('total_grade',     "Overall grade"   ),
         ('random',          "Random"          )
     )
-    reverse_order = forms.ChoiceField(choices=sort_orders,  initial='DSC',   label="")
-    sort_by       = forms.ChoiceField(choices=sort_choices, initial='added', label="")
+    order   = forms.ChoiceField(choices=sort_orders,  initial='DSC',   label="")
+    sort_by = forms.ChoiceField(choices=sort_choices, initial='added', label="")
 
 
 class CommentForm(forms.ModelForm):

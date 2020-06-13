@@ -23,7 +23,7 @@ def main(request, slug=None, id=1):
     # Form data processing
     sort_form = ListSortForm(request.GET)
     if sort_form.is_valid():
-        reverse = (sort_form.cleaned_data['reverse_order'] == "DSC")
+        reverse = (sort_form.cleaned_data['order'] == "DSC")
         sort_by = sort_form.cleaned_data['sort_by']
     else:
         sort_form = ListSortForm()
