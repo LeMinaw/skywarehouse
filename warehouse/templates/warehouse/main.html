@@ -34,7 +34,7 @@
   {% include "warehouse/blueprintcards.html" %}
 
   {% if blueprints.has_other_pages %}
-    <ul class="pagination">
+    <ul class="pagination center-align">
       {% if blueprints.has_previous %}
         <li class="waves-effect">
           <a href="
@@ -43,7 +43,7 @@
             {% else %}
               {% url 'warehouse:main' id=blueprints.previous_page_number %}?{{ request.GET.urlencode }}
             {% endif %}
-          {{ request.GET.urlencode }}">
+          ">
             <i class="material-icons">chevron_left</i>
           </a>
         </li>
@@ -55,7 +55,7 @@
 
       {% for i in blueprints.paginator.page_range %}
         {% if blueprints.number == i %}
-          <li class="active"><a href="#!">{{ i }}</a></li>
+          <li class="active deep-purple lighten-3"><a href="#!">{{ i }}</a></li>
         {% else %}
           <li class="waves-effect">
             <a href="
@@ -64,7 +64,7 @@
               {% else %}
                 {% url 'warehouse:main' id=i %}?{{ request.GET.urlencode }}
               {% endif %}
-            {{ request.GET.urlencode }}">
+            ">
               {{ i }}
             </a>
           </li>
