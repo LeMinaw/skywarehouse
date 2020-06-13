@@ -42,7 +42,7 @@ def main(request, slug=None, id=1):
     blueprints = sorted(blueprints, key=sort_fn, reverse=reverse)
 
     # Pagination
-    paginator = Paginator(blueprints, 2)
+    paginator = Paginator(blueprints, 12)
     blueprints = paginator.page(id)
 
     # Categories
