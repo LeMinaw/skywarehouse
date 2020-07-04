@@ -2,17 +2,16 @@ aiohttp==3.5.4
 async-timeout==3.0.1
 attrs==19.3.0
 Babel==2.8.0
-boto3==1.4.4
-botocore==1.5.83
 certifi==2020.4.5.1
 chardet==3.0.4
+cloudinary==1.21.1
 discord.py==1.1.1
 dj-database-url==0.4.2
 Django==2.2.13
+git+git://github.com/tiagocordeiro/django-cloudinary-storage@1ec7a081fbe5067253dd65dbd44b56c9e829d5e3#egg=django-cloudinary-storage
 django-materializecss-form==1.1.14
 django-phonenumber-field==2.0.0
 django-resized==0.3.9
-django-storages==1.6.3
 docutils==0.13.1
 future==0.16.0
 gunicorn==20.0.4
@@ -26,7 +25,6 @@ pyparsing==2.2.0
 python-dateutil==2.6.0
 pytz==2018.3
 requests==2.22.0
-s3transfer==0.1.10
 six==1.11.0
 sqlparse==0.3.1
 urllib3==1.25.9

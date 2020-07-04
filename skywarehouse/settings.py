@@ -17,7 +17,7 @@ SECRET_KEY = 'DevKey'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "skyware.herokuapp.com", ".skywa.re", ".amazonaws.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "skyware.herokuapp.com", ".skywa.re"]
 
 
 # Application definition
@@ -29,10 +29,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'materializecssform',
-    'storages',
+    'cloudinary',
     'warehouse',
 ]
 
@@ -116,17 +117,6 @@ LOCALE_PATH = (
 )
 
 
-# AWS settings
-
-AWS_ACCESS_KEY_ID = "AKIAI545BHAIKSSSML3Q"
-
-AWS_SECRET_ACCESS_KEY = "secretKey"
-
-AWS_STORAGE_BUCKET_NAME = 'static.skywa.re'
-
-AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME # CNAME at DNS level
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -176,8 +166,6 @@ if os.environ.get("PROD") == 'TRUE':
 
     SECRET_KEY = os.environ.get("SECRET_KEY")
 
-    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_KEY")
-
     DEBUG = False
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -189,13 +177,11 @@ if os.environ.get("PROD") == 'TRUE':
 
     WEBHOOK_ID = '510603302593888257'
 
-    STATICFILES_STORAGE = 'skywarehouse.custom_storages.StaticStorage'
+    CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
-    DEFAULT_FILE_STORAGE = 'skywarehouse.custom_storages.MediaStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-
-    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 
     LOGGING = {
         'version': 1,
