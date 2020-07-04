@@ -29,10 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'materializecssform',
+    'cloudinary_storage',
     'cloudinary',
     'warehouse',
 ]
@@ -130,6 +130,8 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_LOCATION = 'staticfiles'
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
 
 # Media files (uploads)
