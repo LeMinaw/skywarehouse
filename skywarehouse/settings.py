@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'materializecssform',
     'cloudinary_storage',
     'cloudinary',
+    'sorl.thumbnail',
     'warehouse',
 ]
 

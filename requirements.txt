@@ -8,7 +8,7 @@ cloudinary==1.21.1
 discord.py==1.1.1
 dj-database-url==0.4.2
 Django==2.2.13
-git+git://github.com/tiagocordeiro/django-cloudinary-storage@1ec7a081fbe5067253dd65dbd44b56c9e829d5e3#egg=django-cloudinary-storage
+django-cloudinary-storage @ git+git://github.com/tiagocordeiro/django-cloudinary-storage@1ec7a081fbe5067253dd65dbd44b56c9e829d5e3
 django-materializecss-form==1.1.14
 django-phonenumber-field==2.0.0
 django-resized==0.3.9
@@ -26,6 +26,7 @@ python-dateutil==2.6.0
 pytz==2018.3
 requests==2.22.0
 six==1.11.0
+sorl-thumbnail==12.6.3
 sqlparse==0.3.1
 urllib3==1.25.9
 websockets==6.0
