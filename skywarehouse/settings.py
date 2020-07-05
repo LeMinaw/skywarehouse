@@ -192,7 +192,7 @@ if os.environ.get("PROD") == 'TRUE':
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+    DEFAULT_FILE_STORAGE = 'skywarehouse.storages.CustomRawMediaCloudinaryStorage'
 
     LOGGING = {
         'version': 1,
