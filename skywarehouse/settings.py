@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'debug_toolbar',
     'materializecssform',
     'cloudinary_storage',
     'cloudinary',
@@ -45,6 +46,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -166,6 +168,25 @@ WEBHOOK_ID = '510526593702297634'
 WEBHOOK_TOKEN = os.environ.get("WEBHOOK_TOKEN")
 
 
+# Debug toolbar
+
+def show_toolbar(request):
+    return (DEBUG_TOOLBAR
+        and request.user
+        and request.user.username == "LeMinaw"
+    )
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'skywarehouse.settings.show_toolbar',
+    'DISABLE_PANELS': {
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    },
+    'PROFILER_MAX_DEPTH': 16,
+}
+
+DEBUG_TOOLBAR = True
+
+
 # Prod settings
 
 if os.environ.get("PROD") == 'TRUE':
@@ -178,6 +199,9 @@ if os.environ.get("PROD") == 'TRUE':
     SECRET_KEY = os.environ.get("SECRET_KEY")
 
     DEBUG = False
+
+    if os.environ.get('DEBUG_TOOLBAR') != 'TRUE':
+        DEBUG_TOOLBAR = False
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'mail.gandi.net'

@@ -1,6 +1,7 @@
 from django.conf             import settings
 from django.conf.urls        import include, url
 from django.conf.urls.static import static
+from django.urls             import path
 from django.contrib          import admin
 # from warehouse.views      import create_error_view
 
@@ -10,6 +11,12 @@ urlpatterns = [
     url(r'^account/', include("registration.urls")),
     url(r'^',         include("warehouse.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG_TOOLBAR:
+    import debug_toolbar
+    urlpatterns = [
+        path('debug/', include(debug_toolbar.urls))
+    ] + urlpatterns
 
 # handler400 = create_error_view(code=400)
 # handler403 = create_error_view(code=403)
