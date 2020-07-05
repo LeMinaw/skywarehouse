@@ -145,6 +145,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_LOCATION = 'media'
 
 
+# Thumbnails
+
+THUMBNAIL_FORCE_OVERWRITE = True
+
+THUMBNAIL_DEBUG = DEBUG
+
+
 # Mail
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
