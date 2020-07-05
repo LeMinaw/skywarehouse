@@ -12,6 +12,13 @@ from warehouse.validators import *
 from warehouse.fields     import *
 
 
+# Needed to fix a hudge performance issue related to media storage.
+# Acess to image dimensions might be broken.
+post_init.disconnect(ThumbnailImageField.update_dimension_fields)
+post_init.disconnect(ResizedImageField.update_dimension_fields)
+post_init.disconnect(models.ImageField.update_dimension_fields)
+
+
 class Blueprint(models.Model):
     added = models.DateTimeField(auto_now_add=True, verbose_name="date added")
     modif = models.DateTimeField(auto_now=True,     verbose_name="date edited")
@@ -80,10 +87,6 @@ class Blueprint(models.Model):
             return self.file_versions.order_by('-number')[0]
         except IndexError:
             return None
-
-# Needed to fix a hudge performance issue related to media storage.
-# Blueprint model will need its own logic to access cover dimensions.
-post_init.disconnect(ThumbnailImageField.update_dimension_fields)
 
 
 class Category(models.Model):
