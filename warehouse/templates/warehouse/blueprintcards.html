@@ -11,7 +11,7 @@
           <div class="card-image">
             {% if blueprint.image %}
               {% generateimage 'warehouse:card_thumbnail' source=blueprint.image as thumb %}
-              <img width="{{ thumb.width }}" src="{{ thumb.url }}" alt="Cover of {{ blueprint.name }}">
+              <img src="{{ thumb.url }}" alt="Cover of {{ blueprint.name }}">
             {% else %}
               <img src="{% static 'warehouse/img/nopic.png' %}">
             {% endif %}
