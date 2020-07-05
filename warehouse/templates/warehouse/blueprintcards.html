@@ -1,7 +1,7 @@
 {# Needs population from a nested <blueprints> list. #}
 
 {% load staticfiles %}
-{% load thumbnail %}
+{% load imagekit %}
 
 <div class="row">
   <div class="col s12 cards-container">
@@ -10,9 +10,8 @@
         <a href="{{ blueprint.get_absolute_url }}">
           <div class="card-image">
             {% if blueprint.image %}
-              {% thumbnail blueprint.image "400" crop="noop" as thumb %}
-                <img src="{{ thumb.url }}" alt="Cover of {{ blueprint.name }}">
-              {% endthumbnail %}
+              {% generateimage 'warehouse:card_thumbnail' source=blueprint.image as thumb %}
+              <img src="{{ thumb.url }}" alt="Cover of {{ blueprint.name }}">
             {% else %}
               <img src="{% static 'warehouse/img/nopic.png' %}">
             {% endif %}

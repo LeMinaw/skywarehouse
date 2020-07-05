@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'materializecssform',
     'cloudinary_storage',
     'cloudinary',
-    'sorl.thumbnail',
+    'imagekit',
     'warehouse',
 ]
 
@@ -145,13 +145,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MEDIA_LOCATION = 'media'
-
-
-# Thumbnails
-
-THUMBNAIL_FORCE_OVERWRITE = True
-
-THUMBNAIL_DEBUG = DEBUG
 
 
 # Mail

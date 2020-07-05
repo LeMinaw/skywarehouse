@@ -1,22 +1,13 @@
 from django.db                      import models
 from django.db.models               import Sum
-from django.db.models.signals       import post_init
 from django.urls                    import reverse
 from django.utils.text              import slugify
 from django.core.validators         import MaxValueValidator, FileExtensionValidator
 from django.contrib.auth.models     import AbstractUser
 from statistics     import mean
 from django_resized import ResizedImageField
-from sorl.thumbnail import ImageField as ThumbnailImageField
 from warehouse.validators import *
 from warehouse.fields     import *
-
-
-# Needed to fix a hudge performance issue related to media storage.
-# Acess to image dimensions might be broken.
-post_init.disconnect(ThumbnailImageField.update_dimension_fields)
-post_init.disconnect(ResizedImageField.update_dimension_fields)
-post_init.disconnect(models.ImageField.update_dimension_fields)
 
 
 class Blueprint(models.Model):
@@ -33,7 +24,7 @@ class Blueprint(models.Model):
     )
     name   = models.CharField(max_length=64)
     slug   = models.SlugField(verbose_name="identifier")
-    image  = ThumbnailImageField(
+    image  = models.ImageField(
         upload_to='covers/',
         validators=[MaxFileSizeValidator()],
         blank=True,
