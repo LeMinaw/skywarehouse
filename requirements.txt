@@ -29,7 +29,7 @@ requests==2.22.0
 six==1.11.0
 sorl-thumbnail==12.6.3
 sqlparse==0.3.1
-urllib3==1.25.9
+urllib3==1.26.5
 websockets==6.0
 whitenoise==5.0.1
 yarl==1.4.2
