@@ -7,7 +7,7 @@ chardet==3.0.4
 cloudinary==1.21.1
 discord.py==1.1.1
 dj-database-url==0.4.2
-Django==2.2.13
+Django==2.2.21
 django-cloudinary-storage @ git+git://github.com/tiagocordeiro/django-cloudinary-storage@1ec7a081fbe5067253dd65dbd44b56c9e829d5e3
 django-debug-toolbar==2.2
 django-materializecss-form==1.1.14
